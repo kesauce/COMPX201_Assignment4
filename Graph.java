@@ -237,6 +237,9 @@ public class Graph{
         return output;
     }
 
+    /**
+     * Prints out the entire graph including all nodes and all edges
+     */
     public void print(){
         // Loop through the nodes in the graph
         for (Node n : nodes) {
@@ -244,29 +247,35 @@ public class Graph{
             String nodeOutput = n.getValue() + ": ";
 
             // Loop through to rail edges
-            for (Node[] edges : railEdges) {
+            if (railEdges != null){
+                for (Node[] edges : railEdges) {
                 // If current node has an edge 
                 if (n.equals(edges[0])){
                     // Grab the destination and the edge type
                     nodeOutput += "(" + edges[1].getValue() + ", Rail), ";
+                    }
                 }
             }
 
             // Loop through to road edges
-            for (Node[] edges : roadEdges) {
+            if (roadEdges != null){
+                for (Node[] edges : roadEdges) {
                 // If current node has an edge 
                 if (n.equals(edges[0])){
                     // Grab the destination and the edge type
                     nodeOutput += "(" + edges[1].getValue() + ", Road), ";
+                    }
                 }
             }
 
             // Loop through to plane edges
-            for (Node[] edges : planeEdges) {
+            if (planeEdges != null){
+                for (Node[] edges : planeEdges) {
                 // If current node has an edge 
                 if (n.equals(edges[0])){
                     // Grab the destination and the edge type
                     nodeOutput += "(" + edges[1].getValue() + ", Plane), ";
+                    }
                 }
             }
 
