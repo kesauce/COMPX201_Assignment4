@@ -4,6 +4,10 @@ public class Graph{
 
     // Parameters
     private ArrayList<Node> nodes;
+    private ArrayList<Node[]> planeEdges;
+    private ArrayList<Node[]> roadEdges;
+    private ArrayList<Node[]> railEdges;
+
 
     // Constructor
     public Graph(){
@@ -50,22 +54,235 @@ public class Graph{
         }
 
         // Find the node to delete
-        Node node;
-        for(Node n : nodes){
-            if(n.getValue().equals(s)){
-                node = n;
+        Node node = getNode(s);
+
+        // Grab the node's neighbours
+        ArrayList<Node> nodeNeighbours = node.getNeighbours();
+
+        // Loop through the neighbours
+        for(Node neighbour : nodeNeighbours){
+            // Delete itself from its neighbours
+            neighbour.deleteNeighbour(node);
+        }
+
+        // Delete the node from the node list
+        nodes.remove(node);
+
+    }
+
+    /**
+     * Inserts an edge between two points of a specific type
+     * @param s1 One location
+     * @param s2 The other location
+     * @param type The type of edge
+     */
+    public void addEdge(String s1, String s2, String type){
+        // Checks if the strings are empty
+        if (s1 == null || s1 == "" || s2 == null || s2 == "" || type == null || type == ""){
+            System.out.println("Add unsuccessful: string(s) is empty");
+            return;
+        }
+        // Checks if both strings doesn't exist
+        else if(!this.contains(s1) || !this.contains(s2)){
+            System.out.println("Add unsuccessful: string(s) doesn't exist");
+            return;
+        }
+
+        // Grab the arraylist needed for the specific edge
+        ArrayList<Node[]> edgeList = getEdges(type);
+        
+        // Ensure that arraylist is not null
+        if (edgeList == null){
+            System.out.println("Add unsuccessful: invalid type");
+            return;
+        }
+        
+        // Initialise edge array
+        Node [] edgeArray = {null, null};
+
+        // Check whether s1 or s2 comes first
+        if (s1.compareTo(s2) == -1){
+            // Grab the nodes and put it in array
+            edgeArray[0] = getNode(s1);
+            edgeArray[1] = getNode(s2);
+        }
+        else{
+            // Grab the nodes and put it in array
+            edgeArray[1] = getNode(s1);
+            edgeArray[0] = getNode(s2);
+        }
+        
+        // Checks if that edge already exists
+        if (edgeList.contains(edgeArray)){
+            System.out.println("Add unsuccessful: edge already exists");
+            return;
+        }
+
+        // Find the spot in the array where the edge array should be added
+        for (int i = 0; i < edgeList.size(); i++) {
+            // If the new edge array comes before the iterated array
+            if (compareToEdges(edgeArray, edgeList.get(i)) == -1){
+
+                // Insert the new edge array at i
+                edgeList.add(i, edgeArray);
+
+                return;
+            }
+        }
+    }
+
+    /**
+     * Deletes a given edge between two locations
+     * @param s1 The first location
+     * @param s2 The second location
+     * @param type The type of edge
+     */
+    public void deleteEdge(String s1, String s2, String type){
+        // Checks if the strings are empty
+        if (s1 == null || s1 == "" || s2 == null || s2 == "" || type == null || type == ""){
+            System.out.println("Add unsuccessful: string(s) is empty");
+            return;
+        }
+        // Checks if both strings doesn't exist
+        else if(!this.contains(s1) || !this.contains(s2)){
+            System.out.println("Add unsuccessful: string(s) doesn't exist");
+            return;
+        }
+
+    	// Grab the arraylist needed for the specific edge
+        ArrayList<Node[]> edgeList = getEdges(type);
+        
+        // Ensure that arraylist is not null
+        if (edgeList == null){
+            System.out.println("Add unsuccessful: invalid type");
+            return;
+        }
+
+        // Grab the nodes and put it in array
+        Node firstLocation = getNode(s1);
+        Node secondLocation = getNode(s2);
+        Node[] edgeArray = {firstLocation, secondLocation};
+
+        // Remove the edge array in the edge list
+        edgeList.remove(edgeArray);
+        
+    }
+
+    /**
+     * Checks if the graph has a given edge
+     * @param s1 The first location
+     * @param s2 The second location
+     * @param type The edge type
+     * @return True or false whether the graph has a given edge
+     */
+    public boolean hasEdge(String s1, String s2, String type){
+        // Checks if the strings are empty
+        if (s1 == null || s1 == "" || s2 == null || s2 == "" || type == null || type == ""){
+            System.out.println("Add unsuccessful: string(s) is empty");
+            return false;
+        }
+        // Checks if both strings doesn't exist
+        else if(!this.contains(s1) || !this.contains(s2)){
+            System.out.println("Add unsuccessful: string(s) doesn't exist");
+            return false;
+        }
+
+    	// Grab the arraylist needed for the specific edge
+        ArrayList<Node[]> edgeList = getEdges(type);
+        
+        // Ensure that arraylist is not null
+        if (edgeList == null){
+            System.out.println("Add unsuccessful: invalid type");
+            return false;
+        }
+
+        // Grab the nodes and put it in array
+        Node firstLocation = getNode(s1);
+        Node secondLocation = getNode(s2);
+        Node[] edgeArray = {firstLocation, secondLocation};
+
+        // Loop through the edge list and return true if edge array is found
+        for (Node[] n : edgeList) {
+            if (compareToEdges(edgeArray, n) == 0){
+                return true;
             }
         }
 
-
+        return false;
     }
+
+    /**
+     * Lists out the edges of a particular type
+     * @param type The edge type
+     * @return A string of the list
+     */
+    public String getEdgesOfType(String type){
+        // Grab the arraylist needed for the specific edge
+        ArrayList<Node[]> edgeList = getEdges(type);
+        
+        // Ensure that arraylist is not null
+        if (edgeList == null){
+            System.out.println("Add unsuccessful: invalid type");
+            return "";
+        }
+
+        // Initialise output
+        String output = "";
+
+        // Loop through the edge list
+        for (Node[] n : edgeList) {
+            output += "(" + n[0].getValue() + ", " + n[1].getValue() + "), ";
+        }
+
+        return output;
+    }
+
+    public void print(){
+        // Loop through the nodes in the graph
+        for (Node n : nodes) {
+            // Initialise the output line
+            String nodeOutput = n.getValue() + ": ";
+
+            // Loop through to rail edges
+            for (Node[] edges : railEdges) {
+                // If current node has an edge 
+                if (n.equals(edges[0])){
+                    // Grab the destination and the edge type
+                    nodeOutput += "(" + edges[1].getValue() + ", Rail), ";
+                }
+            }
+
+            // Loop through to road edges
+            for (Node[] edges : roadEdges) {
+                // If current node has an edge 
+                if (n.equals(edges[0])){
+                    // Grab the destination and the edge type
+                    nodeOutput += "(" + edges[1].getValue() + ", Road), ";
+                }
+            }
+
+            // Loop through to plane edges
+            for (Node[] edges : planeEdges) {
+                // If current node has an edge 
+                if (n.equals(edges[0])){
+                    // Grab the destination and the edge type
+                    nodeOutput += "(" + edges[1].getValue() + ", Plane), ";
+                }
+            }
+
+            // Print out the node's output
+            System.out.println(nodeOutput);
+        }
+    }
+
+    // Helper methods
 
     /**
      * Checks if a certain value is in the nodes list
      * @param s The node to find
      * @return Whether the list contains that value or not
      */
-    public boolean contains(String s){
+    private boolean contains(String s){
         // Checks if the node already exists
         for (Node node : nodes) {
             if(node.getValue().equals(s)){
@@ -74,5 +291,65 @@ public class Graph{
         }
 
         return false;
+    }
+
+    /**
+     * Grabs the arraylist of the edge
+     * @param type The type of edge
+     * @return The arraylist of the edges
+     */
+    private ArrayList<Node[]> getEdges(String type){
+        // Make string uppercase
+        String typeUpper = type.toUpperCase();
+
+        // Check what the string is referring to
+        if (typeUpper == "PLANE"){
+            return planeEdges;
+        }
+        else if (typeUpper == "ROAD"){
+            return roadEdges;
+        }
+        else if (typeUpper == "RAIL"){
+            return railEdges;
+        }
+        else{
+            return null;
+        }
+    }
+
+    /**
+     * Finds the node of a given string
+     * @param s The location of node
+     * @return The node object
+     */
+    private Node getNode(String s){
+        Node node = null;
+
+        // Loop through to find the node
+        for(Node n : nodes){
+            if(n.getValue().equals(s)){
+                node = n;
+            }
+        }
+
+        return node;
+    }
+
+    /**
+     * Compares two edge arrays and determines which should go first
+     * @param nodeArray1 The first array
+     * @param nodeArray2 The second array
+     * @return An integer determining where the first array should go compared to the second array
+     */
+    private int compareToEdges(Node[] nodeArray1, Node[] nodeArray2){
+
+        // Compare the first values of the two arrays
+        if (nodeArray1[0].getValue().compareTo(nodeArray2[0].getValue()) != 0){
+            return nodeArray1[0].getValue().compareTo(nodeArray2[0].getValue());
+        }
+        // Compare the second values of the two arrays
+        else{
+            return nodeArray1[1].getValue().compareTo(nodeArray2[1].getValue());
+        }
     }
 }
