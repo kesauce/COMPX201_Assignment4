@@ -62,8 +62,8 @@ public class TestGraph {
      * Tests whether add() can add 1 value
      */
     @Test
-    @DisplayName("Test add(), dependent on print()")
-    public void testAddOneValue(){
+    @DisplayName("Test addNode(), dependent on print()")
+    public void testAddNodeOneValue(){
         // Assign
         Graph graph = new Graph();
 
@@ -83,8 +83,8 @@ public class TestGraph {
      * Tests whether add() handles duplicates
      */
     @Test
-    @DisplayName("Test add()")
-    public void testAddDuplicates(){
+    @DisplayName("Test addNode()")
+    public void testAddNodeDuplicates(){
         // Assign
         Graph graph = new Graph();
 
@@ -103,8 +103,8 @@ public class TestGraph {
      * Tests whether add() can handle null values
      */
     @Test
-    @DisplayName("Test add()")
-    public void testAddNull(){
+    @DisplayName("Test addNode()")
+    public void testAddNodeNull(){
         // Assign
         Graph graph = new Graph();
 
@@ -122,8 +122,8 @@ public class TestGraph {
      * Tests whether delete() can delete a value
      */
     @Test
-    @DisplayName("Test delete(), dependent on insert() and print()")
-    public void testDeleteOneValue(){
+    @DisplayName("Test deleteNode(), dependent on addNode() and print()")
+    public void testDeleteNodeOneValue(){
         // Assign
         Graph graph = new Graph();
 
@@ -143,8 +143,8 @@ public class TestGraph {
      * Tests whether delete() handles non-existent values
      */
     @Test
-    @DisplayName("Test delete(), dependent on insert() and print()")
-    public void testDeleteNonExistentValues(){
+    @DisplayName("Test deleteNode(), dependent on addNode() and print()")
+    public void testDeleteNodeNonExistentValues(){
         // Assign
         Graph graph = new Graph();
 
@@ -163,8 +163,8 @@ public class TestGraph {
      * Tests whether delete() handles null values
      */
     @Test
-    @DisplayName("Test delete(), dependent on insert() and print()")
-    public void testDeleteNullValues(){
+    @DisplayName("Test deleteNode(), dependent on addNode() and print()")
+    public void testDeleteNodeNullValues(){
         // Assign
         Graph graph = new Graph();
 
@@ -174,6 +174,30 @@ public class TestGraph {
 
         String actual = outputStreamCaptor.toString().trim();
         String expected = "Delete unsuccessful: string is null";
+
+        // Assert
+        Assertions.assertEquals(expected, actual);
+    }
+
+    /**
+     * Tests whether addEdge() can add an edge
+     */
+    @Test
+    @DisplayName("Test addEdge(), dependent on addNode() and print()")
+    public void addEdgeRail(){
+        // Assign
+        Graph graph = new Graph();
+
+        // Act
+        graph.addNode("Auckland");
+        graph.addNode("Hamilton");
+        graph.addEdge("Auckland", "Hamilton", "Rail");
+
+        graph.print();
+
+        String actual = outputStreamCaptor.toString().trim();
+        String expected = "Auckland: (Hamilton, Rail), \r\n" + 
+                        "Hamilton: (Auckland, Rail),";
 
         // Assert
         Assertions.assertEquals(expected, actual);

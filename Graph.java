@@ -4,9 +4,9 @@ public class Graph{
 
     // Parameters
     private ArrayList<Node> nodes;
-    private ArrayList<Node[]> planeEdges;
-    private ArrayList<Node[]> roadEdges;
-    private ArrayList<Node[]> railEdges;
+    private ArrayList<Node[]> planeEdges =  new ArrayList<Node[]>();
+    private ArrayList<Node[]> roadEdges = new ArrayList<Node[]>();
+    private ArrayList<Node[]> railEdges = new ArrayList<Node[]>();
 
 
     // Constructor
@@ -118,6 +118,12 @@ public class Graph{
             return;
         }
 
+        // If edge array is empty just add it
+        if (edgeList.isEmpty()){
+            edgeList.add(edgeArray);
+                return;
+        }
+
         // Find the spot in the array where the edge array should be added
         for (int i = 0; i < edgeList.size(); i++) {
             // If the new edge array comes before the iterated array
@@ -125,7 +131,6 @@ public class Graph{
 
                 // Insert the new edge array at i
                 edgeList.add(i, edgeArray);
-
                 return;
             }
         }
@@ -249,10 +254,14 @@ public class Graph{
             // Loop through to rail edges
             if (railEdges != null){
                 for (Node[] edges : railEdges) {
-                // If current node has an edge 
-                if (n.equals(edges[0])){
-                    // Grab the destination and the edge type
-                    nodeOutput += "(" + edges[1].getValue() + ", Rail), ";
+                    // If current node has an edge 
+                    if (n.equals(edges[0])){
+                        // Grab the destination and the edge type
+                        nodeOutput += "(" + edges[1].getValue() + ", Rail), ";
+                    }
+                    else if (n.equals(edges[1])){
+                        // Grab the destination and the edge type
+                        nodeOutput += "(" + edges[0].getValue() + ", Rail), ";
                     }
                 }
             }
@@ -260,10 +269,14 @@ public class Graph{
             // Loop through to road edges
             if (roadEdges != null){
                 for (Node[] edges : roadEdges) {
-                // If current node has an edge 
-                if (n.equals(edges[0])){
-                    // Grab the destination and the edge type
-                    nodeOutput += "(" + edges[1].getValue() + ", Road), ";
+                    // If current node has an edge 
+                    if (n.equals(edges[0])){
+                        // Grab the destination and the edge type
+                        nodeOutput += "(" + edges[1].getValue() + ", Road), ";
+                    }
+                    else if (n.equals(edges[1])){
+                        // Grab the destination and the edge type
+                        nodeOutput += "(" + edges[0].getValue() + ", Road), ";
                     }
                 }
             }
@@ -271,10 +284,14 @@ public class Graph{
             // Loop through to plane edges
             if (planeEdges != null){
                 for (Node[] edges : planeEdges) {
-                // If current node has an edge 
-                if (n.equals(edges[0])){
-                    // Grab the destination and the edge type
-                    nodeOutput += "(" + edges[1].getValue() + ", Plane), ";
+                    // If current node has an edge 
+                    if (n.equals(edges[0])){
+                        // Grab the destination and the edge type
+                        nodeOutput += "(" + edges[1].getValue() + ", Plane), ";
+                    }
+                    else if (n.equals(edges[1])){
+                        // Grab the destination and the edge type
+                        nodeOutput += "(" + edges[0].getValue() + ", Plane), ";
                     }
                 }
             }
@@ -312,13 +329,13 @@ public class Graph{
         String typeUpper = type.toUpperCase();
 
         // Check what the string is referring to
-        if (typeUpper == "PLANE"){
+        if (typeUpper.equals("PLANE")){
             return planeEdges;
         }
-        else if (typeUpper == "ROAD"){
+        else if (typeUpper.equals("ROAD")){
             return roadEdges;
         }
-        else if (typeUpper == "RAIL"){
+        else if (typeUpper.equals("RAIL")){
             return railEdges;
         }
         else{
