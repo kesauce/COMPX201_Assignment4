@@ -304,4 +304,87 @@ public class TestGraph {
         // Assert
         Assertions.assertEquals(expected, actual);
     }
+
+    /**
+     * Tests whether addEdge() skips null strings
+     */
+    @Test
+    @DisplayName("Test addEdge()")
+    public void addEdgesNull(){
+        // Assign
+        Graph graph = new Graph();
+
+        // Act
+        graph.addEdge("", "", "");
+
+        String actual = outputStreamCaptor.toString().trim();
+        String expected = "Add unsuccessful: string(s) is empty";
+
+        // Assert
+        Assertions.assertEquals(expected, actual);
+    }
+
+    /**
+     * Tests whether addEdge() skips non-existent locations
+     */
+    @Test
+    @DisplayName("Test addEdge()")
+    public void addEdgesNonExistent(){
+        // Assign
+        Graph graph = new Graph();
+
+        // Act
+        graph.addEdge("Hamilton", "Auckland", "Road");
+
+        String actual = outputStreamCaptor.toString().trim();
+        String expected = "Add unsuccessful: string(s) doesn't exist";
+
+        // Assert
+        Assertions.assertEquals(expected, actual);
+    }
+
+    /**
+     * Tests whether addEdge() skips invalid types
+     */
+    @Test
+    @DisplayName("Test addEdge()")
+    public void addEdgesInvalidType(){
+        // Assign
+        Graph graph = new Graph();
+
+        // Act
+        graph.addNode("Auckland");
+        graph.addNode("Hamilton");
+        graph.addEdge("Hamilton", "Auckland", "Boat");
+
+
+        String actual = outputStreamCaptor.toString().trim();
+        String expected = "Add unsuccessful: invalid type";
+
+        // Assert
+        Assertions.assertEquals(expected, actual);
+    }
+
+    /**
+     * Tests whether addEdge() skips duplicate edges
+     */
+    @Test
+    @DisplayName("Test addEdge(), dependent on addNode()")
+    public void addEdgesDuplicates(){
+        // Assign
+        Graph graph = new Graph();
+
+        // Act
+        graph.addNode("Auckland");
+        graph.addNode("Hamilton");
+        graph.addEdge("Auckland", "Hamilton", "Rail");
+        graph.addEdge("Auckland", "Hamilton", "Rail");
+
+
+        String actual = outputStreamCaptor.toString().trim();
+        String expected = "Add unsuccessful: edge already exists";
+
+        // Assert
+        Assertions.assertEquals(expected, actual);
+    }
 }

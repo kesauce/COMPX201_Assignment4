@@ -116,16 +116,13 @@ public class Graph{
         }
         
         // Checks if that edge already exists
-        if (edgeList.contains(edgeArray)){
+        if (this.containsEdge(edgeList, edgeArray)){
             System.out.println("Add unsuccessful: edge already exists");
             return;
         }
 
         // Add the edge array
         edgeList.add(edgeArray);
-
-        // Sort
-        this.sortEdges();
         
     }
 
@@ -383,64 +380,13 @@ public class Graph{
         }
     }
 
-    private void sortEdges(){
-        if (roadEdges.size() > 1){
-            // Go through each edges array
-            for (int i = 0; i < roadEdges.size(); i++) {
-                // If current array is more than the next array then swap
-                if(this.compareToEdges(roadEdges.get(i), roadEdges.get(i + 1)) == 1){
-                    // Create temporary variables
-                    Node[] currentArray = roadEdges.get(i);
-                    Node[] nextArray = roadEdges.get(i + 1);
-
-                    // Delete the two variables
-                    roadEdges.remove(i);
-                    roadEdges.remove(i + 1);
-
-                    // Add and swap
-                    roadEdges.add(i, nextArray);
-                    roadEdges.add(i + 1, currentArray);
-                }
+    private boolean containsEdge(ArrayList<Node[]> edgeList, Node[] array){
+        // Loop through the edge list
+        for (Node[] nodes : edgeList) {
+            if (nodes[0].getValue().equals(array[0].getValue()) && nodes[1].getValue().equals(array[1].getValue())){
+                return true;
             }
         }
-        else if (railEdges.size() > 1){
-            // Go through each edges array
-            for (int i = 0; i < railEdges.size(); i++) {
-                // If current array is more than the next array then swap
-                if(this.compareToEdges(railEdges.get(i), railEdges.get(i + 1)) == 1){
-                    // Create temporary variables
-                    Node[] currentArray = railEdges.get(i);
-                    Node[] nextArray = railEdges.get(i + 1);
-
-                    // Delete the two variables
-                    railEdges.remove(i);
-                    railEdges.remove(i + 1);
-
-                    // Add and swap
-                    railEdges.add(i, nextArray);
-                    railEdges.add(i + 1, currentArray);
-                }
-            }
-        }
-        else if(roadEdges.size() > 1){
-            // Go through each edges array
-            for (int i = 0; i < planeEdges.size(); i++) {
-                // If current array is more than the next array then swap
-                if(this.compareToEdges(planeEdges.get(i), planeEdges.get(i + 1)) == 1){
-                    // Create temporary variables
-                    Node[] currentArray = planeEdges.get(i);
-                    Node[] nextArray = planeEdges.get(i + 1);
-
-                    // Delete the two variables
-                    planeEdges.remove(i);
-                    planeEdges.remove(i + 1);
-
-                    // Add and swap
-                    planeEdges.add(i, nextArray);
-                    planeEdges.add(i + 1, currentArray);
-                }
-            }
-        }
-
+        return false;
     }
 }
