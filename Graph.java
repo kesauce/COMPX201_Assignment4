@@ -4,14 +4,17 @@ public class Graph{
 
     // Parameters
     private ArrayList<Node> nodes;
-    private ArrayList<Node[]> planeEdges =  new ArrayList<Node[]>();
-    private ArrayList<Node[]> roadEdges = new ArrayList<Node[]>();
-    private ArrayList<Node[]> railEdges = new ArrayList<Node[]>();
+    private ArrayList<Node[]> planeEdges;
+    private ArrayList<Node[]> roadEdges;
+    private ArrayList<Node[]> railEdges;
 
 
     // Constructor
     public Graph(){
         nodes = new ArrayList<Node>();
+        planeEdges =  new ArrayList<Node[]>();
+        roadEdges = new ArrayList<Node[]>();
+        railEdges = new ArrayList<Node[]>();
     }
 
     // Methods
@@ -118,22 +121,12 @@ public class Graph{
             return;
         }
 
-        // If edge array is empty just add it
-        if (edgeList.isEmpty()){
-            edgeList.add(edgeArray);
-                return;
-        }
+        // Add the edge array
+        edgeList.add(edgeArray);
 
-        // Find the spot in the array where the edge array should be added
-        for (int i = 0; i < edgeList.size(); i++) {
-            // If the new edge array comes before the iterated array
-            if (compareToEdges(edgeArray, edgeList.get(i)) == -1){
-
-                // Insert the new edge array at i
-                edgeList.add(i, edgeArray);
-                return;
-            }
-        }
+        // Sort
+        this.sortEdges();
+        
     }
 
     /**
@@ -251,17 +244,20 @@ public class Graph{
             // Initialise the output line
             String nodeOutput = n.getValue() + ": ";
 
+            // Store the list of strings
+            ArrayList<String> neighbours = new ArrayList<String>();
+
             // Loop through to rail edges
             if (railEdges != null){
                 for (Node[] edges : railEdges) {
                     // If current node has an edge 
                     if (n.equals(edges[0])){
                         // Grab the destination and the edge type
-                        nodeOutput += "(" + edges[1].getValue() + ", Rail), ";
+                        neighbours.add("(" + edges[1].getValue() + ", Rail), ");
                     }
                     else if (n.equals(edges[1])){
                         // Grab the destination and the edge type
-                        nodeOutput += "(" + edges[0].getValue() + ", Rail), ";
+                        neighbours.add("(" + edges[0].getValue() + ", Rail), ");
                     }
                 }
             }
@@ -272,11 +268,11 @@ public class Graph{
                     // If current node has an edge 
                     if (n.equals(edges[0])){
                         // Grab the destination and the edge type
-                        nodeOutput += "(" + edges[1].getValue() + ", Road), ";
+                        neighbours.add("(" + edges[1].getValue() + ", Road), ");
                     }
                     else if (n.equals(edges[1])){
                         // Grab the destination and the edge type
-                        nodeOutput += "(" + edges[0].getValue() + ", Road), ";
+                        neighbours.add("(" + edges[0].getValue() + ", Road), ");
                     }
                 }
             }
@@ -287,13 +283,21 @@ public class Graph{
                     // If current node has an edge 
                     if (n.equals(edges[0])){
                         // Grab the destination and the edge type
-                        nodeOutput += "(" + edges[1].getValue() + ", Plane), ";
+                        neighbours.add("(" + edges[1].getValue() + ", Plane), ");
                     }
                     else if (n.equals(edges[1])){
                         // Grab the destination and the edge type
-                        nodeOutput += "(" + edges[0].getValue() + ", Plane), ";
+                        neighbours.add("(" + edges[0].getValue() + ", Plane), ");
                     }
                 }
+            }
+
+            // Sort the list of strings
+            neighbours.sort(null);
+
+            // Add the strings to the output
+            for (String neighbour : neighbours) {
+                nodeOutput += neighbour;
             }
 
             // Print out the node's output
@@ -326,7 +330,7 @@ public class Graph{
      */
     private ArrayList<Node[]> getEdges(String type){
         // Make string uppercase
-        String typeUpper = type.toUpperCase();
+        String typeUpper = type.trim().toUpperCase();
 
         // Check what the string is referring to
         if (typeUpper.equals("PLANE")){
@@ -377,5 +381,66 @@ public class Graph{
         else{
             return nodeArray1[1].getValue().compareTo(nodeArray2[1].getValue());
         }
+    }
+
+    private void sortEdges(){
+        if (roadEdges.size() > 1){
+            // Go through each edges array
+            for (int i = 0; i < roadEdges.size(); i++) {
+                // If current array is more than the next array then swap
+                if(this.compareToEdges(roadEdges.get(i), roadEdges.get(i + 1)) == 1){
+                    // Create temporary variables
+                    Node[] currentArray = roadEdges.get(i);
+                    Node[] nextArray = roadEdges.get(i + 1);
+
+                    // Delete the two variables
+                    roadEdges.remove(i);
+                    roadEdges.remove(i + 1);
+
+                    // Add and swap
+                    roadEdges.add(i, nextArray);
+                    roadEdges.add(i + 1, currentArray);
+                }
+            }
+        }
+        else if (railEdges.size() > 1){
+            // Go through each edges array
+            for (int i = 0; i < railEdges.size(); i++) {
+                // If current array is more than the next array then swap
+                if(this.compareToEdges(railEdges.get(i), railEdges.get(i + 1)) == 1){
+                    // Create temporary variables
+                    Node[] currentArray = railEdges.get(i);
+                    Node[] nextArray = railEdges.get(i + 1);
+
+                    // Delete the two variables
+                    railEdges.remove(i);
+                    railEdges.remove(i + 1);
+
+                    // Add and swap
+                    railEdges.add(i, nextArray);
+                    railEdges.add(i + 1, currentArray);
+                }
+            }
+        }
+        else if(roadEdges.size() > 1){
+            // Go through each edges array
+            for (int i = 0; i < planeEdges.size(); i++) {
+                // If current array is more than the next array then swap
+                if(this.compareToEdges(planeEdges.get(i), planeEdges.get(i + 1)) == 1){
+                    // Create temporary variables
+                    Node[] currentArray = planeEdges.get(i);
+                    Node[] nextArray = planeEdges.get(i + 1);
+
+                    // Delete the two variables
+                    planeEdges.remove(i);
+                    planeEdges.remove(i + 1);
+
+                    // Add and swap
+                    planeEdges.add(i, nextArray);
+                    planeEdges.add(i + 1, currentArray);
+                }
+            }
+        }
+
     }
 }

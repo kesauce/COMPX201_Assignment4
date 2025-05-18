@@ -180,7 +180,7 @@ public class TestGraph {
     }
 
     /**
-     * Tests whether addEdge() can add an edge
+     * Tests whether addEdge() can add a rail edge
      */
     @Test
     @DisplayName("Test addEdge(), dependent on addNode() and print()")
@@ -198,6 +198,108 @@ public class TestGraph {
         String actual = outputStreamCaptor.toString().trim();
         String expected = "Auckland: (Hamilton, Rail), \r\n" + 
                         "Hamilton: (Auckland, Rail),";
+
+        // Assert
+        Assertions.assertEquals(expected, actual);
+    }
+
+    /**
+     * Tests whether addEdge() can add a road edge
+     */
+    @Test
+    @DisplayName("Test addEdge(), dependent on addNode() and print()")
+    public void addEdgeRoad(){
+        // Assign
+        Graph graph = new Graph();
+
+        // Act
+        graph.addNode("Auckland");
+        graph.addNode("Hamilton");
+        graph.addEdge("Auckland", "Hamilton", "Road");
+
+        graph.print();
+
+        String actual = outputStreamCaptor.toString().trim();
+        String expected = "Auckland: (Hamilton, Road), \r\n" + 
+                        "Hamilton: (Auckland, Road),";
+
+        // Assert
+        Assertions.assertEquals(expected, actual);
+    }
+
+    /**
+     * Tests whether addEdge() can add a plane edge
+     */
+    @Test
+    @DisplayName("Test addEdge(), dependent on addNode() and print()")
+    public void addEdgePlane(){
+        // Assign
+        Graph graph = new Graph();
+
+        // Act
+        graph.addNode("Auckland");
+        graph.addNode("Hamilton");
+        graph.addEdge("Auckland", "Hamilton", "Plane");
+
+        graph.print();
+
+        String actual = outputStreamCaptor.toString().trim();
+        String expected = "Auckland: (Hamilton, Plane), \r\n" + 
+                        "Hamilton: (Auckland, Plane),";
+
+        // Assert
+        Assertions.assertEquals(expected, actual);
+    }
+
+    /**
+     * Tests whether addEdge() can add multiple edges from the same two nodes
+     */
+    @Test
+    @DisplayName("Test addEdge(), dependent on addNode() and print()")
+    public void addEdgesTwoLocations(){
+        // Assign
+        Graph graph = new Graph();
+
+        // Act
+        graph.addNode("Auckland");
+        graph.addNode("Hamilton");
+        graph.addEdge("Auckland", "Hamilton", "Rail");
+        graph.addEdge("Auckland", "Hamilton", "Road");
+        graph.addEdge("Auckland", "Hamilton", "Plane");
+
+        graph.print();
+
+        String actual = outputStreamCaptor.toString().trim();
+        String expected = "Auckland: (Hamilton, Plane), (Hamilton, Rail), (Hamilton, Road), \r\n" + 
+                        "Hamilton: (Auckland, Plane), (Auckland, Rail), (Auckland, Road),";
+
+        // Assert
+        Assertions.assertEquals(expected, actual);
+    }
+
+    /**
+     * Tests whether addEdge() can add multiple edges from the three nodes
+     */
+    @Test
+    @DisplayName("Test addEdge(), dependent on addNode() and print()")
+    public void addEdgesThreeLocations(){
+        // Assign
+        Graph graph = new Graph();
+
+        // Act
+        graph.addNode("Auckland");
+        graph.addNode("Hamilton");
+        graph.addNode("Tauranga");
+        graph.addEdge("Auckland", "Hamilton", "Rail");
+        graph.addEdge("Hamilton", "Tauranga", "Road");
+        graph.addEdge("Auckland", "Tauranga", "Plane");
+
+        graph.print();
+
+        String actual = outputStreamCaptor.toString().trim();
+        String expected = "Auckland: (Hamilton, Rail), (Tauranga, Plane), \r\n" + 
+                        "Hamilton: (Auckland, Rail), (Tauranga, Road), \r\n" +
+                        "Tauranga: (Auckland, Plane), (Hamilton, Road),";
 
         // Assert
         Assertions.assertEquals(expected, actual);
