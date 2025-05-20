@@ -336,6 +336,102 @@ public class Graph{
         }
     }
 
+    /**
+     * Finds out which cities you can reach with given tickets
+     * @param startCity The starting city
+     * @param busTickets The number of bus tickets
+     * @param planeTickets The number of plane tickets
+     * @param trainTickets The number of train tickets
+     * @return The list of reachable cities
+     */
+    public String ticketTraverse(String startCity, int busTickets, int planeTickets, int trainTickets){
+        // Checks whether the starting city is a real node
+        if (!this.contains(startCity)){
+            System.out.println("Check unsuccessful: starting city doesn't exist");
+            return "";
+        }
+
+        // Initalise string of visited cities and add the starting city to it
+        ArrayList<String> visitedCities = new ArrayList<String>();
+        visitedCities.add(startCity);
+
+        // Find the neighbours of the starting city
+        Node startNode = getNode(startCity);
+        ArrayList<Node> neighbours = startNode.getNeighbours();
+
+        // Get the edge type between the start city and the neighbour
+        if (hasEdge(startCity, neighbours.get(0).getValue(), "Road")){
+            busTickets--;
+        }
+        else if (hasEdge(startCity, neighbours.get(0).getValue(), "Rail")){
+            trainTickets--;
+        }
+        else{
+            planeTickets--;
+        }
+
+        // Loop through each neighbour
+        for (int i = 0; i < neighbours.size(); i++) {
+            // Find the reachable cities using bus
+            for (int j = busTickets; i > 0; i--) {
+                // Get the neighbours using bus
+                ArrayList<Node> busCities = traverse(neighbours.get(i), "Road");
+
+                // Add to the visited cities if it doesn't exist yet
+                for (Node node : busCities) {
+                    if (!visitedCities.contains(node.getValue())){
+                        visitedCities.add(node.getValue());
+                    }
+                }
+            }
+
+            // Find the reachable cities using train
+            for (int j = trainTickets; i > 0; i--) {
+                // Get the neighbours using bus
+                ArrayList<Node> trainCities = traverse(neighbours.get(i), "Rail");
+
+                // Add to the visited cities if it doesn't exist yet
+                for (Node node : trainCities) {
+                    if (!visitedCities.contains(node.getValue())){
+                        visitedCities.add(node.getValue());
+                    }
+                }
+            }
+
+            // Find the reachable cities using plane
+            for (int j = planeTickets; i > 0; i--) {
+                // Get the neighbours using bus
+                ArrayList<Node> planeCities = traverse(neighbours.get(i), "Plane");
+
+                // Add to the visited cities if it doesn't exist yet
+                for (Node node : planeCities) {
+                    if (!visitedCities.contains(node.getValue())){
+                        visitedCities.add(node.getValue());
+                    }
+                }
+            }
+
+            // Get the edge type between the neighbour and the next neighbour
+            if (hasEdge(neighbours.get(i).getValue(), neighbours.get(i + 1).getValue(), "Road")){
+                busTickets--;
+            }
+            else if (hasEdge(neighbours.get(i).getValue(), neighbours.get(i + 1).getValue(), "Rail")){
+                trainTickets--;
+            }
+            else{
+                planeTickets--;
+            }
+        }
+        
+        // Return the strings
+        String output = "";
+        for (String city : visitedCities) {
+            output += city + ", ";
+        }
+
+        return output;
+    }
+
     // Helper methods
 
     /**
@@ -397,24 +493,6 @@ public class Graph{
     }
 
     /**
-     * Compares two edge arrays and determines which should go first
-     * @param nodeArray1 The first array
-     * @param nodeArray2 The second array
-     * @return An integer determining where the first array should go compared to the second array
-     */
-    private int compareToEdges(Node[] nodeArray1, Node[] nodeArray2){
-
-        // Compare the first values of the two arrays
-        if (nodeArray1[0].getValue().compareTo(nodeArray2[0].getValue()) != 0){
-            return nodeArray1[0].getValue().compareTo(nodeArray2[0].getValue());
-        }
-        // Compare the second values of the two arrays
-        else{
-            return nodeArray1[1].getValue().compareTo(nodeArray2[1].getValue());
-        }
-    }
-
-    /**
      * Checks if and edge list contains a particular edge
      * @param edgeList The edge list
      * @param array The target array
@@ -429,4 +507,53 @@ public class Graph{
         }
         return false;
     }
+
+    /**
+     * Traverses the nodes adjacent to the starting node of a certain type
+     * @param n The current node to traverse
+     * @return The arraylist of all the visited nodes
+     */
+    private ArrayList<Node> traverse(Node n, String type){
+        // Initialise the visited nodes array list
+        ArrayList<Node> canVisitNeighbourNodes = new ArrayList<Node>();
+
+        // Grab the node's neighbours
+        ArrayList<Node> neighbours = n.getNeighbours();
+
+        // If the current has no neighbours then end
+        if (neighbours.isEmpty()){
+            return null;
+        }
+
+        // Loop through each neighbour
+        for (Node neighbour : neighbours) {
+            // Check if there is a certain edge
+            if (hasEdge(neighbour.getValue(), n.getValue(), type)){
+                // Add it to the list of can visit nodes
+                canVisitNeighbourNodes.add(neighbour);
+            }
+        }
+
+        return canVisitNeighbourNodes;
+    }
+
+    // /**
+    //  * Traverses the nodes adjacent to the starting node
+    //  * @param n The current node to traverse
+    //  * @return The arraylist of all the visited nodes
+    //  */
+    // private Node traverseHelper(Node n){
+    //     // Grab the node's neighbours
+    //     ArrayList<Node> neighbours = n.getNeighbours();
+
+    //     // If the current has no neighbours then end
+    //     if (neighbours.isEmpty()){
+    //         return null;
+    //     }
+
+    //     // Go through each neighbour and traverse each neighbour
+    //     for (Node neighbour : neighbours) {
+            
+    //     }
+    // }
 }
