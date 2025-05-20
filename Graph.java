@@ -229,8 +229,6 @@ public class Graph{
 
         // Loop through the edge list and return true if edge array is found
         for (Node[] nodes : edgeList) {
-            System.out.println(nodes[0].getValue());
-            System.out.println(nodes[1].getValue());
             if (nodes[0].getValue().equals(edgeArray[0].getValue()) && nodes[1].getValue().equals(edgeArray[1].getValue()) || nodes[0].getValue().equals(edgeArray[1].getValue()) && nodes[1].getValue().equals(edgeArray[0].getValue())){
                 // Edge found
                 return true;
@@ -260,7 +258,12 @@ public class Graph{
 
         // Loop through the edge list
         for (Node[] n : edgeList) {
-            output += "(" + n[0].getValue() + ", " + n[1].getValue() + "), ";
+            if (n[0].getValue().compareTo(n[1].getValue()) < 0){
+                output += "(" + n[0].getValue() + ", " + n[1].getValue() + "), ";
+            }
+            else{
+                output += "(" + n[1].getValue() + ", " + n[0].getValue() + "), ";
+            }
         }
 
         return output;
@@ -373,7 +376,7 @@ public class Graph{
         // Loop through each neighbour
         for (int i = 0; i < neighbours.size(); i++) {
             // Find the reachable cities using bus
-            for (int j = busTickets; i > 0; i--) {
+            for (int j = busTickets; j > 0; j--) {
                 // Get the neighbours using bus
                 ArrayList<Node> busCities = traverse(neighbours.get(i), "Road");
 
@@ -386,7 +389,7 @@ public class Graph{
             }
 
             // Find the reachable cities using train
-            for (int j = trainTickets; i > 0; i--) {
+            for (int j = trainTickets; j > 0; j--) {
                 // Get the neighbours using bus
                 ArrayList<Node> trainCities = traverse(neighbours.get(i), "Rail");
 
@@ -399,7 +402,7 @@ public class Graph{
             }
 
             // Find the reachable cities using plane
-            for (int j = planeTickets; i > 0; i--) {
+            for (int j = planeTickets; j > 0; j--) {
                 // Get the neighbours using bus
                 ArrayList<Node> planeCities = traverse(neighbours.get(i), "Plane");
 

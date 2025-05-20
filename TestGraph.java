@@ -603,7 +603,7 @@ public class TestGraph {
      */
     @Test
     @DisplayName("Test getEdgesOfType(), dependent on addNode(), addEdge(),")
-    public void testGetEdgseOfTypeRail(){
+    public void testGetEdgesOfTypeRail(){
         // Assign
         Graph graph = new Graph();
 
@@ -625,7 +625,7 @@ public class TestGraph {
      */
     @Test
     @DisplayName("Test getEdgesOfType(), dependent on addNode(), addEdge(),")
-    public void testGetEdgseOfTypeRoad(){
+    public void testGetEdgesOfTypeRoad(){
         // Assign
         Graph graph = new Graph();
 
@@ -647,7 +647,7 @@ public class TestGraph {
      */
     @Test
     @DisplayName("Test getEdgesOfType(), dependent on addNode(), addEdge(),")
-    public void testGetEdgseOfTypePlane(){
+    public void testGetEdgesOfTypePlane(){
         // Assign
         Graph graph = new Graph();
 
@@ -669,7 +669,7 @@ public class TestGraph {
      */
     @Test
     @DisplayName("Test getEdgesOfType(),")
-    public void testGetEdgseOfTypeInvalidType(){
+    public void testGetEdgesOfTypeInvalidType(){
         // Assign
         Graph graph = new Graph();
 
@@ -683,4 +683,8 @@ public class TestGraph {
         // Assert
         Assertions.assertEquals(expected, actual);
     }
+
+    /**
+     * Tests whether
+     */
 }
