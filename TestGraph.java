@@ -184,7 +184,7 @@ public class TestGraph {
      */
     @Test
     @DisplayName("Test addEdge(), dependent on addNode() and print()")
-    public void addEdgeRail(){
+    public void testAddEdgeRail(){
         // Assign
         Graph graph = new Graph();
 
@@ -208,7 +208,7 @@ public class TestGraph {
      */
     @Test
     @DisplayName("Test addEdge(), dependent on addNode() and print()")
-    public void addEdgeRoad(){
+    public void testAddEdgeRoad(){
         // Assign
         Graph graph = new Graph();
 
@@ -232,7 +232,7 @@ public class TestGraph {
      */
     @Test
     @DisplayName("Test addEdge(), dependent on addNode() and print()")
-    public void addEdgePlane(){
+    public void testAddEdgePlane(){
         // Assign
         Graph graph = new Graph();
 
@@ -256,7 +256,7 @@ public class TestGraph {
      */
     @Test
     @DisplayName("Test addEdge(), dependent on addNode() and print()")
-    public void addEdgesTwoLocations(){
+    public void testAddEdgesTwoLocations(){
         // Assign
         Graph graph = new Graph();
 
@@ -282,7 +282,7 @@ public class TestGraph {
      */
     @Test
     @DisplayName("Test addEdge(), dependent on addNode() and print()")
-    public void addEdgesThreeLocations(){
+    public void testAddEdgesThreeLocations(){
         // Assign
         Graph graph = new Graph();
 
@@ -310,7 +310,7 @@ public class TestGraph {
      */
     @Test
     @DisplayName("Test addEdge()")
-    public void addEdgesNull(){
+    public void testAddEdgesNull(){
         // Assign
         Graph graph = new Graph();
 
@@ -329,7 +329,7 @@ public class TestGraph {
      */
     @Test
     @DisplayName("Test addEdge()")
-    public void addEdgesNonExistent(){
+    public void testAddEdgesNonExistent(){
         // Assign
         Graph graph = new Graph();
 
@@ -348,7 +348,7 @@ public class TestGraph {
      */
     @Test
     @DisplayName("Test addEdge()")
-    public void addEdgesInvalidType(){
+    public void testAddEdgesInvalidType(){
         // Assign
         Graph graph = new Graph();
 
@@ -370,7 +370,7 @@ public class TestGraph {
      */
     @Test
     @DisplayName("Test addEdge(), dependent on addNode()")
-    public void addEdgesDuplicates(){
+    public void testAddEdgesDuplicates(){
         // Assign
         Graph graph = new Graph();
 
@@ -383,6 +383,302 @@ public class TestGraph {
 
         String actual = outputStreamCaptor.toString().trim();
         String expected = "Add unsuccessful: edge already exists";
+
+        // Assert
+        Assertions.assertEquals(expected, actual);
+    }
+
+    /**
+     * Tests whether deleteEdge() deletes one edge
+     */
+    @Test
+    @DisplayName("Test deleteEdge(), dependent on addNode(), addEdge(), print()")
+    public void testDeleteEdgeOneValue(){
+        // Assign
+        Graph graph = new Graph();
+
+        // Act
+        graph.addNode("Auckland");
+        graph.addNode("Hamilton");
+        graph.addEdge("Auckland", "Hamilton", "Rail");
+        graph.deleteEdge("Auckland", "Hamilton", "Rail");
+
+        graph.print();
+
+        String actual = outputStreamCaptor.toString().trim();
+        String expected = "Auckland: \r\n" + 
+                        "Hamilton:";
+
+        // Assert
+        Assertions.assertEquals(expected, actual);
+    }
+
+    /**
+     * Tests whether deleteEdge() deletes a non-existent edge
+     */
+    @Test
+    @DisplayName("Test deleteEdge(), dependent on print()")
+    public void testDeleteEdgeNonExistentEdge(){
+        // Assign
+        Graph graph = new Graph();
+
+        // Act
+        graph.addNode("Auckland");
+        graph.addNode("Hamilton");
+        graph.deleteEdge("Auckland", "Hamilton", "Rail");
+
+        String actual = outputStreamCaptor.toString().trim();
+        String expected = "Delete unsuccessful: edge doesn't exist";
+
+        // Assert
+        Assertions.assertEquals(expected, actual);
+    }
+
+    /**
+     * Tests whether deleteEdge() skips non-existent locations
+     */
+    @Test
+    @DisplayName("Test addEdge()")
+    public void testDeleteEdgesNonExistentValue(){
+        // Assign
+        Graph graph = new Graph();
+
+        // Act
+        graph.deleteEdge("Hamilton", "Auckland", "Road");
+
+        String actual = outputStreamCaptor.toString().trim();
+        String expected = "Delete unsuccessful: string(s) doesn't exist";
+
+        // Assert
+        Assertions.assertEquals(expected, actual);
+    }
+
+    /**
+     * Tests whether deleteEdge() skips null strings
+     */
+    @Test
+    @DisplayName("Test deleteEdge()")
+    public void testDeleteEdgesNull(){
+        // Assign
+        Graph graph = new Graph();
+
+        // Act
+        graph.deleteEdge("", "", "");
+
+        String actual = outputStreamCaptor.toString().trim();
+        String expected = "Delete unsuccessful: string(s) is empty";
+
+        // Assert
+        Assertions.assertEquals(expected, actual);
+    }
+
+    /**
+     * Tests whether deleteEdge() skips invalid types
+     */
+    @Test
+    @DisplayName("Test deleteEdge()")
+    public void testDeleteEdgesInvalidType(){
+        // Assign
+        Graph graph = new Graph();
+
+        // Act
+        graph.addNode("Auckland");
+        graph.addNode("Hamilton");
+        graph.deleteEdge("Hamilton", "Auckland", "Boat");
+
+
+        String actual = outputStreamCaptor.toString().trim();
+        String expected = "Delete unsuccessful: invalid type";
+
+        // Assert
+        Assertions.assertEquals(expected, actual);
+    }
+
+    /**
+     * Tests whether hasEdge() can detect an edge
+     */
+    @Test
+    @DisplayName("Test hasEdge(), dependent on addNode(), addEdge()")
+    public void testHasEdgeTrue(){
+        // Assign
+        Graph graph = new Graph();
+
+        // Act
+        graph.addNode("Auckland");
+        graph.addNode("Hamilton");
+        graph.addEdge("Auckland", "Hamilton", "Rail");
+
+        graph.print();
+
+        boolean expected = graph.hasEdge("Hamilton", "Auckland", "Rail");
+
+        // Assert
+        Assertions.assertTrue(expected);
+    }
+
+    /**
+     * Tests whether hasEdge() can detect an edge
+     */
+    @Test
+    @DisplayName("Test hasEdge(), dependent on addNode(), addEdge()")
+    public void testHasEdgeFalse(){
+        // Assign
+        Graph graph = new Graph();
+
+        // Act
+        graph.addNode("Auckland");
+        graph.addNode("Hamilton");
+        graph.addEdge("Auckland", "Hamilton", "Plane");
+
+        graph.print();
+
+        boolean expected = graph.hasEdge("Hamilton", "Auckland", "Rail");
+
+        // Assert
+        Assertions.assertFalse(expected);
+    }
+
+    /**
+     * Tests whether hasEdge() skips null strings
+     */
+    @Test
+    @DisplayName("Test hasEdge()")
+    public void testHasEdgesNull(){
+        // Assign
+        Graph graph = new Graph();
+
+        // Act
+        graph.hasEdge("", "", "");
+
+        String actual = outputStreamCaptor.toString().trim();
+        String expected = "Check unsuccessful: string(s) is empty";
+
+        // Assert
+        Assertions.assertEquals(expected, actual);
+    }
+
+    /**
+     * Tests whether hasEdge() skips non-existent locations
+     */
+    @Test
+    @DisplayName("Test hasEdge()")
+    public void testHasEdgesNonExistentValue(){
+        // Assign
+        Graph graph = new Graph();
+
+        // Act
+        graph.hasEdge("Hamilton", "Auckland", "Road");
+
+        String actual = outputStreamCaptor.toString().trim();
+        String expected = "Check unsuccessful: string(s) doesn't exist";
+
+        // Assert
+        Assertions.assertEquals(expected, actual);
+    }
+
+    /**
+     * Tests whether hasEdge() skips invalid types
+     */
+    @Test
+    @DisplayName("Test deleteEdge(), dependent on addNode()")
+    public void testHasEdgesInvalidType(){
+        // Assign
+        Graph graph = new Graph();
+
+        // Act
+        graph.addNode("Auckland");
+        graph.addNode("Hamilton");
+        graph.hasEdge("Hamilton", "Auckland", "Boat");
+
+
+        String actual = outputStreamCaptor.toString().trim();
+        String expected = "Check unsuccessful: invalid type";
+
+        // Assert
+        Assertions.assertEquals(expected, actual);
+    }
+
+    /**
+     * Tests whether getEdgesOfType() works with Rails
+     */
+    @Test
+    @DisplayName("Test getEdgesOfType(), dependent on addNode(), addEdge(),")
+    public void testGetEdgseOfTypeRail(){
+        // Assign
+        Graph graph = new Graph();
+
+        // Act
+        graph.addNode("Auckland");
+        graph.addNode("Hamilton");
+        graph.addEdge("Hamilton", "Auckland", "Rail");
+
+        String actual = graph.getEdgesOfType("Rail");
+        String expected = "(Auckland, Hamilton), ";
+
+
+        // Assert
+        Assertions.assertEquals(expected, actual);
+    }
+
+    /**
+     * Tests whether getEdgesOfType() works with Roads
+     */
+    @Test
+    @DisplayName("Test getEdgesOfType(), dependent on addNode(), addEdge(),")
+    public void testGetEdgseOfTypeRoad(){
+        // Assign
+        Graph graph = new Graph();
+
+        // Act
+        graph.addNode("Auckland");
+        graph.addNode("Hamilton");
+        graph.addEdge("Hamilton", "Auckland", "Road");
+
+        String actual = graph.getEdgesOfType("Road");
+        String expected = "(Auckland, Hamilton), ";
+
+
+        // Assert
+        Assertions.assertEquals(expected, actual);
+    }
+
+    /**
+     * Tests whether getEdgesOfType() works with Planes
+     */
+    @Test
+    @DisplayName("Test getEdgesOfType(), dependent on addNode(), addEdge(),")
+    public void testGetEdgseOfTypePlane(){
+        // Assign
+        Graph graph = new Graph();
+
+        // Act
+        graph.addNode("Auckland");
+        graph.addNode("Hamilton");
+        graph.addEdge("Hamilton", "Auckland", "Plane");
+
+        String actual = graph.getEdgesOfType("Plane");
+        String expected = "(Auckland, Hamilton), ";
+
+
+        // Assert
+        Assertions.assertEquals(expected, actual);
+    }
+
+    /**
+     * Tests whether getEdgesOfType() handles invalid types
+     */
+    @Test
+    @DisplayName("Test getEdgesOfType(),")
+    public void testGetEdgseOfTypeInvalidType(){
+        // Assign
+        Graph graph = new Graph();
+
+        // Act
+        graph.getEdgesOfType("Boat");
+
+        String actual = outputStreamCaptor.toString().trim();
+        String expected = "Check unsuccessful: invalid type";
+
 
         // Assert
         Assertions.assertEquals(expected, actual);

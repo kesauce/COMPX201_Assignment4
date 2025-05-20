@@ -135,12 +135,12 @@ public class Graph{
     public void deleteEdge(String s1, String s2, String type){
         // Checks if the strings are empty
         if (s1 == null || s1 == "" || s2 == null || s2 == "" || type == null || type == ""){
-            System.out.println("Add unsuccessful: string(s) is empty");
+            System.out.println("Delete unsuccessful: string(s) is empty");
             return;
         }
         // Checks if both strings doesn't exist
-        else if(!this.contains(s1) || !this.contains(s2)){
-            System.out.println("Add unsuccessful: string(s) doesn't exist");
+        else if (!this.contains(s1) || !this.contains(s2)){
+            System.out.println("Delete unsuccessful: string(s) doesn't exist");
             return;
         }
 
@@ -149,18 +149,39 @@ public class Graph{
         
         // Ensure that arraylist is not null
         if (edgeList == null){
-            System.out.println("Add unsuccessful: invalid type");
+            System.out.println("Delete unsuccessful: invalid type");
             return;
         }
 
         // Grab the nodes and put it in array
-        Node firstLocation = getNode(s1);
-        Node secondLocation = getNode(s2);
-        Node[] edgeArray = {firstLocation, secondLocation};
+        Node[] edgeArray = {null, null};
 
-        // Remove the edge array in the edge list
-        edgeList.remove(edgeArray);
+        // Check whether s1 or s2 comes first
+        if (s1.compareTo(s2) == -1){
+            // Grab the nodes and put it in array
+            edgeArray[0] = getNode(s1);
+            edgeArray[1] = getNode(s2);
+        }
+        else{
+            // Grab the nodes and put it in array
+            edgeArray[1] = getNode(s1);
+            edgeArray[0] = getNode(s2);
+        }
+
+        // Checks if the array list doesn't contains the edge
+        if (!this.containsEdge(edgeList, edgeArray)){
+            System.out.println("Delete unsuccessful: edge doesn't exist");
+            return;
+        }
         
+        // Loop through the array list and find the exact edge
+        for (Node[] nodes : edgeList) {
+            if (nodes[0].getValue().equals(edgeArray[0].getValue()) && nodes[1].getValue().equals(edgeArray[1].getValue())){
+                // Delete the edge
+                edgeList.remove(nodes);
+                return;
+            }
+        }
     }
 
     /**
@@ -173,12 +194,12 @@ public class Graph{
     public boolean hasEdge(String s1, String s2, String type){
         // Checks if the strings are empty
         if (s1 == null || s1 == "" || s2 == null || s2 == "" || type == null || type == ""){
-            System.out.println("Add unsuccessful: string(s) is empty");
+            System.out.println("Check unsuccessful: string(s) is empty");
             return false;
         }
         // Checks if both strings doesn't exist
         else if(!this.contains(s1) || !this.contains(s2)){
-            System.out.println("Add unsuccessful: string(s) doesn't exist");
+            System.out.println("Check unsuccessful: string(s) doesn't exist");
             return false;
         }
 
@@ -187,18 +208,31 @@ public class Graph{
         
         // Ensure that arraylist is not null
         if (edgeList == null){
-            System.out.println("Add unsuccessful: invalid type");
+            System.out.println("Check unsuccessful: invalid type");
             return false;
         }
 
         // Grab the nodes and put it in array
-        Node firstLocation = getNode(s1);
-        Node secondLocation = getNode(s2);
-        Node[] edgeArray = {firstLocation, secondLocation};
+        Node[] edgeArray = {null, null};
+
+        // Check whether s1 or s2 comes first
+        if (s1.compareTo(s2) == -1){
+            // Grab the nodes and put it in array
+            edgeArray[0] = getNode(s1);
+            edgeArray[1] = getNode(s2);
+        }
+        else{
+            // Grab the nodes and put it in array
+            edgeArray[1] = getNode(s1);
+            edgeArray[0] = getNode(s2);
+        }
 
         // Loop through the edge list and return true if edge array is found
-        for (Node[] n : edgeList) {
-            if (compareToEdges(edgeArray, n) == 0){
+        for (Node[] nodes : edgeList) {
+            System.out.println(nodes[0].getValue());
+            System.out.println(nodes[1].getValue());
+            if (nodes[0].getValue().equals(edgeArray[0].getValue()) && nodes[1].getValue().equals(edgeArray[1].getValue()) || nodes[0].getValue().equals(edgeArray[1].getValue()) && nodes[1].getValue().equals(edgeArray[0].getValue())){
+                // Edge found
                 return true;
             }
         }
@@ -217,7 +251,7 @@ public class Graph{
         
         // Ensure that arraylist is not null
         if (edgeList == null){
-            System.out.println("Add unsuccessful: invalid type");
+            System.out.println("Check unsuccessful: invalid type");
             return "";
         }
 
@@ -380,6 +414,12 @@ public class Graph{
         }
     }
 
+    /**
+     * Checks if and edge list contains a particular edge
+     * @param edgeList The edge list
+     * @param array The target array
+     * @return The boolean determining if the edge list contains an array
+     */
     private boolean containsEdge(ArrayList<Node[]> edgeList, Node[] array){
         // Loop through the edge list
         for (Node[] nodes : edgeList) {
