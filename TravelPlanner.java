@@ -60,6 +60,7 @@ public class TravelPlanner{
                 System.out.println("3. Find edge");
                 System.out.println("4. Print edge");
                 System.out.println("5. Print reachable cities");
+                System.out.println("6: Exit");
     
                 // Loops through user input to ensure they pick the right numbner
                 while(true){
@@ -68,11 +69,11 @@ public class TravelPlanner{
                         userInput = Integer.parseInt(scanner.nextLine());
 
                         // If number if valid then break
-                        if (userInput > 0  && userInput <= 5){
+                        if (userInput > 0  && userInput <= 6){
                             break;
                         }
                         else{
-                            System.err.println("Invalid number. Choose from 1 to 5.");
+                            System.err.println("Invalid number. Choose from 1 to 6.");
                             continue;
                         }
                     }
@@ -89,13 +90,16 @@ public class TravelPlanner{
                     
                     // Ask user for locations
                     System.out.println("Enter the first city: ");
-                    String firstLocation = scanner.nextLine();
+                    String lineFirst = scanner.nextLine().trim();
+                    String firstLocation = lineFirst.substring(0, 1).toUpperCase() + lineFirst.substring(1).toLowerCase();
 
                     System.out.println("Enter the second city: ");
-                    String secondLocation = scanner.nextLine();
+                    String lineSecond = scanner.nextLine().trim();
+                    String secondLocation = lineSecond.substring(0, 1).toUpperCase() + lineSecond.substring(1).toLowerCase();
 
                     System.out.println("Enter the edge type");
-                    String type = scanner.nextLine();
+                    String lineType = scanner.nextLine().trim();
+                    String type = lineType.substring(0, 1).toUpperCase() + lineType.substring(1).toLowerCase();
 
                     graph.addEdge(secondLocation, firstLocation, type);
     
@@ -112,13 +116,16 @@ public class TravelPlanner{
                     
                     // Ask user for locations
                     System.out.println("Enter the first city: ");
-                    String firstLocation = scanner.nextLine();
+                    String lineFirst = scanner.nextLine().trim();
+                    String firstLocation = lineFirst.substring(0, 1).toUpperCase() + lineFirst.substring(1).toLowerCase();
 
                     System.out.println("Enter the second city: ");
-                    String secondLocation = scanner.nextLine();
+                    String lineSecond = scanner.nextLine().trim();
+                    String secondLocation = lineSecond.substring(0, 1).toUpperCase() + lineSecond.substring(1).toLowerCase();
 
                     System.out.println("Enter the edge type");
-                    String type = scanner.nextLine();
+                    String lineType = scanner.nextLine().trim();
+                    String type = lineType.substring(0, 1).toUpperCase() + lineType.substring(1).toLowerCase();
 
                     graph.deleteEdge(secondLocation, firstLocation, type);
     
@@ -134,13 +141,16 @@ public class TravelPlanner{
                     
                     // Ask user for locations
                     System.out.println("Enter the first city: ");
-                    String firstLocation = scanner.nextLine();
+                    String lineFirst = scanner.nextLine().trim();
+                    String firstLocation = lineFirst.substring(0, 1).toUpperCase() + lineFirst.substring(1).toLowerCase();
 
                     System.out.println("Enter the second city: ");
-                    String secondLocation = scanner.nextLine();
+                    String lineSecond = scanner.nextLine().trim();
+                    String secondLocation = lineSecond.substring(0, 1).toUpperCase() + lineSecond.substring(1).toLowerCase();
 
                     System.out.println("Enter the edge type");
-                    String type = scanner.nextLine();
+                    String lineType = scanner.nextLine().trim();
+                    String type = lineType.substring(0, 1).toUpperCase() + lineType.substring(1).toLowerCase();
 
                     // Check if edge exists
                     boolean hasEdge = graph.hasEdge(secondLocation, firstLocation, type);
@@ -165,7 +175,8 @@ public class TravelPlanner{
                     
                     // Ask user for edge type
                     System.out.println("Enter the edge type");
-                    String type = scanner.nextLine();
+                    String typeLine = scanner.nextLine().trim();
+                    String type = typeLine.substring(0, 1).toUpperCase() + typeLine.substring(1).toLowerCase();
 
                     // Check if edge exists
                     String edges = graph.getEdgesOfType(type);
@@ -185,7 +196,9 @@ public class TravelPlanner{
                     
                     // Ask user for locations
                     System.out.println("Enter the staring city: ");
-                    String startLocation = scanner.nextLine();
+                    String line = scanner.nextLine().trim();
+                    String startLocation = line.substring(0, 1).toUpperCase() + line.substring(1).toLowerCase();;
+                    
 
                     // Ask user for number of bus tickets
                     int busTickets = 0;
@@ -234,6 +247,16 @@ public class TravelPlanner{
                     // Return or quit
                     System.out.println("Returning to main menu...");
                     Thread.sleep(2000);
+                }
+            
+                // Exits the program
+                else if (userInput == 6){
+                    
+                    // Stops the program
+                    System.out.println("----------");
+                    System.err.println("Program terminated...");
+                    isRunning = false;
+                    System.exit(0);
                 }
             }
 

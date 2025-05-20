@@ -499,52 +499,5 @@ public class Graph{
         return false;
     }
 
-    /**
-     * Traverses the nodes adjacent to the starting node of a certain type
-     * @param n The current node to traverse
-     * @return The arraylist of all the visited nodes
-     */
-    private ArrayList<Node> traverse(Node n, String type){
-        // Initialise the visited nodes array list
-        ArrayList<Node> canVisitNeighbourNodes = new ArrayList<Node>();
-
-        // Grab the node's neighbours
-        ArrayList<Node> neighbours = n.getNeighbours();
-
-        // If the current has no neighbours then end
-        if (neighbours.isEmpty()){
-            return null;
-        }
-
-        // Loop through each neighbour
-        for (Node neighbour : neighbours) {
-            // Check if there is a certain edge
-            if (hasEdge(neighbour.getValue(), n.getValue(), type)){
-                // Add it to the list of can visit nodes
-                canVisitNeighbourNodes.add(neighbour);
-            }
-        }
-
-        return canVisitNeighbourNodes;
-    }
-
-    // /**
-    //  * Traverses the nodes adjacent to the starting node
-    //  * @param n The current node to traverse
-    //  * @return The arraylist of all the visited nodes
-    //  */
-    // private Node traverseHelper(Node n){
-    //     // Grab the node's neighbours
-    //     ArrayList<Node> neighbours = n.getNeighbours();
-
-    //     // If the current has no neighbours then end
-    //     if (neighbours.isEmpty()){
-    //         return null;
-    //     }
-
-    //     // Go through each neighbour and traverse each neighbour
-    //     for (Node neighbour : neighbours) {
-            
-    //     }
-    // }
+    
 }
