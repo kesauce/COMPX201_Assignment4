@@ -684,7 +684,55 @@ public class TestGraph {
         Assertions.assertEquals(expected, actual);
     }
 
-    /**
-     * Tests whether
+    /** 
+     * Tests whether traverseTicket() works correctly for road
      */
+    @Test
+    @DisplayName("Test traverseTicket, dependent on addNode, addEdge()")
+    public void testTraverseTicketRoad(){
+        // Assign
+        Graph graph = new Graph();
+
+        // Act
+        graph.addNode("Auckland");
+        graph.addNode("Hamilton");
+        graph.addNode("Tauranga");
+        graph.addNode("Wellington");
+        graph.addEdge("Hamilton", "Auckland", "Road");
+        graph.addEdge("Hamilton", "Tauranga", "Plane");
+        graph.addEdge("Hamilton", "Wellington", "Rail");
+
+        String actual = graph.ticketTraverse("Hamilton", 0, 1, 0);
+        String expected = "Hamilton, Tauranga, ";
+
+
+        // Assert
+        Assertions.assertEquals(expected, actual);
+    }
+
+    /** 
+     * Tests whether traverseTicket() works correctly for all edges
+     */
+    @Test
+    @DisplayName("Test traverseTicket, dependent on addNode, addEdge()")
+    public void testTraverseTicketAllEdges(){
+        // Assign
+        Graph graph = new Graph();
+
+        // Act
+        graph.addNode("Auckland");
+        graph.addNode("Hamilton");
+        graph.addNode("Tauranga");
+        graph.addNode("Wellington");
+        graph.addEdge("Hamilton", "Auckland", "Road");
+        graph.addEdge("Hamilton", "Tauranga", "Plane");
+        graph.addEdge("Hamilton", "Wellington", "Rail");
+
+        String actual = graph.ticketTraverse("Auckland", 1, 1, 1);
+        String expected = "Auckland, Hamilton, Tauranga, Wellington, ";
+
+
+        // Assert
+        Assertions.assertEquals(expected, actual);
+    }
 }

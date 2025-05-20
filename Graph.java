@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Graph{
 
@@ -124,6 +126,9 @@ public class Graph{
         // Add the edge array
         edgeList.add(edgeArray);
         
+        // Add the neighbours to each node
+        getNode(s1).addNeighbour(getNode(s2));
+        getNode(s2).addNeighbour(getNode(s1));
     }
 
     /**
@@ -179,6 +184,11 @@ public class Graph{
             if (nodes[0].getValue().equals(edgeArray[0].getValue()) && nodes[1].getValue().equals(edgeArray[1].getValue())){
                 // Delete the edge
                 edgeList.remove(nodes);
+
+                // Delete the nodes from each neighbour
+                getNode(s1).deleteNeighbour(getNode(s2));
+                getNode(s2).deleteNeighbour(getNode(s1));
+
                 return;
             }
         }
@@ -354,75 +364,53 @@ public class Graph{
             return "";
         }
 
-        // Initalise string of visited cities and add the starting city to it
+        // Initialise a to-visit list of nodes and add the starting node to it
+        Queue<Object[]> toVisitList = new LinkedList<Object[]>();
+        toVisitList.add(new Object[] {getNode(startCity), busTickets, planeTickets, trainTickets});
+
+        // Initalise string of visited cities
         ArrayList<String> visitedCities = new ArrayList<String>();
-        visitedCities.add(startCity);
 
-        // Find the neighbours of the starting city
-        Node startNode = getNode(startCity);
-        ArrayList<Node> neighbours = startNode.getNeighbours();
 
-        // Get the edge type between the start city and the neighbour
-        if (hasEdge(startCity, neighbours.get(0).getValue(), "Road")){
-            busTickets--;
-        }
-        else if (hasEdge(startCity, neighbours.get(0).getValue(), "Rail")){
-            trainTickets--;
-        }
-        else{
-            planeTickets--;
-        }
+        // Go through the to visit list until it's empty
+        while (!toVisitList.isEmpty()){
+            // Pop the front of the queue
+            Object[] current = toVisitList.remove();
+            Node currentNode = (Node) current[0];
+            int remainingBus = (int) current[1];
+            int remainingPlane = (int) current[2];
+            int remainingTrain = (int) current[3];
 
-        // Loop through each neighbour
-        for (int i = 0; i < neighbours.size(); i++) {
-            // Find the reachable cities using bus
-            for (int j = busTickets; j > 0; j--) {
-                // Get the neighbours using bus
-                ArrayList<Node> busCities = traverse(neighbours.get(i), "Road");
 
-                // Add to the visited cities if it doesn't exist yet
-                for (Node node : busCities) {
-                    if (!visitedCities.contains(node.getValue())){
-                        visitedCities.add(node.getValue());
-                    }
+            // If current node has been visited already then skip
+            if (visitedCities.contains(currentNode.getValue())){
+                continue;
+            }
+
+            // Consider the current node visited
+            visitedCities.add(currentNode.getValue());
+
+            // Grab the neighbours of the current node
+            ArrayList<Node> neighbours = currentNode.getNeighbours();
+            
+
+            // Go through each neighbour
+            for (Node neighbour : neighbours) {
+                // If a road exists between the current node and its neighbour and the user has sufficient tickets
+                if (hasEdge(currentNode.getValue(), neighbour.getValue(), "Road") && busTickets > 0){
+                    // Add the neighbour to the to-visit list and only decrement bus ticket
+                    toVisitList.add(new Object[] {neighbour, remainingBus - 1, remainingPlane, remainingTrain});
                 }
-            }
-
-            // Find the reachable cities using train
-            for (int j = trainTickets; j > 0; j--) {
-                // Get the neighbours using bus
-                ArrayList<Node> trainCities = traverse(neighbours.get(i), "Rail");
-
-                // Add to the visited cities if it doesn't exist yet
-                for (Node node : trainCities) {
-                    if (!visitedCities.contains(node.getValue())){
-                        visitedCities.add(node.getValue());
-                    }
+                // If a train exists between the current node and its neigbour and the user has sufficient tickets
+                else if (hasEdge(currentNode.getValue(), neighbour.getValue(), "Rail") && trainTickets > 0){
+                    // Add the neighbour to the to-visit list and only decrement train ticket
+                    toVisitList.add(new Object[] {neighbour, remainingBus, remainingPlane, remainingTrain - 1});
                 }
-            }
-
-            // Find the reachable cities using plane
-            for (int j = planeTickets; j > 0; j--) {
-                // Get the neighbours using bus
-                ArrayList<Node> planeCities = traverse(neighbours.get(i), "Plane");
-
-                // Add to the visited cities if it doesn't exist yet
-                for (Node node : planeCities) {
-                    if (!visitedCities.contains(node.getValue())){
-                        visitedCities.add(node.getValue());
-                    }
+                // If a plane exists between the current node and its neigbour and the user has sufficient tickets
+                else if (hasEdge(currentNode.getValue(), neighbour.getValue(), "Plane") && planeTickets > 0){
+                    // Add the neighbour to the to-visit list and only decrement plane ticket
+                    toVisitList.add(new Object[] {neighbour, remainingBus - 1, remainingPlane - 1, remainingTrain});
                 }
-            }
-
-            // Get the edge type between the neighbour and the next neighbour
-            if (hasEdge(neighbours.get(i).getValue(), neighbours.get(i + 1).getValue(), "Road")){
-                busTickets--;
-            }
-            else if (hasEdge(neighbours.get(i).getValue(), neighbours.get(i + 1).getValue(), "Rail")){
-                trainTickets--;
-            }
-            else{
-                planeTickets--;
             }
         }
         
