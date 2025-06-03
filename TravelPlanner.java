@@ -107,7 +107,7 @@ public class TravelPlanner{
                     String lineSecond = scanner.nextLine().trim();
                     String secondLocation = lineSecond.substring(0, 1).toUpperCase() + lineSecond.substring(1).toLowerCase();
 
-                    System.out.println("Enter the edge type");
+                    System.out.println("Enter the edge type: ");
                     String lineType = scanner.nextLine().trim();
                     String type = lineType.substring(0, 1).toUpperCase() + lineType.substring(1).toLowerCase();
 
@@ -133,7 +133,7 @@ public class TravelPlanner{
                     String lineSecond = scanner.nextLine().trim();
                     String secondLocation = lineSecond.substring(0, 1).toUpperCase() + lineSecond.substring(1).toLowerCase();
 
-                    System.out.println("Enter the edge type");
+                    System.out.println("Enter the edge type: ");
                     String lineType = scanner.nextLine().trim();
                     String type = lineType.substring(0, 1).toUpperCase() + lineType.substring(1).toLowerCase();
 
@@ -158,7 +158,7 @@ public class TravelPlanner{
                     String lineSecond = scanner.nextLine().trim();
                     String secondLocation = lineSecond.substring(0, 1).toUpperCase() + lineSecond.substring(1).toLowerCase();
 
-                    System.out.println("Enter the edge type");
+                    System.out.println("Enter the edge type: ");
                     String lineType = scanner.nextLine().trim();
                     String type = lineType.substring(0, 1).toUpperCase() + lineType.substring(1).toLowerCase();
 
@@ -184,7 +184,7 @@ public class TravelPlanner{
                     System.out.println("Printing an edge...");
                     
                     // Ask user for edge type
-                    System.out.println("Enter the edge type");
+                    System.out.println("Enter the edge type: ");
                     String typeLine = scanner.nextLine().trim();
                     String type = typeLine.substring(0, 1).toUpperCase() + typeLine.substring(1).toLowerCase();
 

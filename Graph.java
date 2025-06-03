@@ -268,14 +268,22 @@ public class Graph{
         // Initialise output
         String output = "";
 
+        // Ensure each node array is formatted alphabetically
+        for (Node[] n : edgeList){
+            if (n[0].getValue().compareTo(n[1].getValue()) > 0){
+                // Swap if they're not alphabetical
+                Node temp = n[0];
+                n[0] = n[1];
+                n[1] = temp;
+            }
+        }
+
+        // Sort the edge list by the first node then the second node, if the first node is equal
+        Collections.sort(edgeList, Comparator.comparing((Node[] arr) -> arr[0].getValue()).thenComparing(arr -> arr[1].getValue()));
+ 
         // Loop through the edge list
         for (Node[] n : edgeList) {
-            if (n[0].getValue().compareTo(n[1].getValue()) < 0){
-                output += "(" + n[0].getValue() + ", " + n[1].getValue() + "), ";
-            }
-            else{
-                output += "(" + n[1].getValue() + ", " + n[0].getValue() + "), ";
-            }
+            output += "(" + n[0].getValue() + ", " + n[1].getValue() + "), ";
         }
 
         return output;
