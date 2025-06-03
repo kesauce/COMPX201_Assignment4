@@ -14,7 +14,7 @@ public class TravelPlanner{
         Scanner scanner;
         try{
             // Initialising to read the appliance csv
-            String filePath = "nz_city_connections.csv";
+            String filePath = "nz_cities_long.csv";
             BufferedReader reader = new BufferedReader(new FileReader(filePath));
             String line = "";
 
@@ -28,10 +28,19 @@ public class TravelPlanner{
                     // Split and store each value in a line to an array
                     String[] csvRow = line.split(",");
 
-                    // Add the nodes
-                    graph.addNode(csvRow[0]);
-                    graph.addNode(csvRow[1]);
-                    graph.addEdge(csvRow[0], csvRow[1], csvRow[2]);
+                    // Add the nodes if it doesn't exist
+                    if (!graph.contains(csvRow[0])){
+                        graph.addNode(csvRow[0]);
+                    }
+                    
+                    if (!graph.contains(csvRow[1])){
+                        graph.addNode(csvRow[1]);
+                    }
+
+                    Node[] nodeArray = {graph.getNode(csvRow[0]), graph.getNode(csvRow[1])};
+                    if (!graph.containsEdge(graph.getEdges(csvRow[2]), nodeArray)){
+                        graph.addEdge(csvRow[0], csvRow[1], csvRow[2]);
+                    }
 
                     // Read the next line
                     line = reader.readLine();

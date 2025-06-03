@@ -423,14 +423,14 @@ public class Graph{
         return output;
     }
 
-    // Helper methods
+    // Helper methods also used in the travel planner
 
     /**
      * Checks if a certain value is in the nodes list
      * @param s The node to find
      * @return Whether the list contains that value or not
      */
-    private boolean contains(String s){
+    public boolean contains(String s){
         // Checks if the node already exists
         for (Node node : nodes) {
             if(node.getValue().equals(s)){
@@ -446,7 +446,7 @@ public class Graph{
      * @param type The type of edge
      * @return The arraylist of the edges
      */
-    private ArrayList<Node[]> getEdges(String type){
+    public ArrayList<Node[]> getEdges(String type){
         // Make string uppercase
         String typeUpper = type.trim().toUpperCase();
 
@@ -454,10 +454,10 @@ public class Graph{
         if (typeUpper.equals("PLANE")){
             return planeEdges;
         }
-        else if (typeUpper.equals("ROAD")){
+        else if (typeUpper.equals("ROAD") || typeUpper.equals("BUS")){
             return roadEdges;
         }
-        else if (typeUpper.equals("RAIL")){
+        else if (typeUpper.equals("RAIL") || typeUpper.equals("TRAIN")){
             return railEdges;
         }
         else{
@@ -470,7 +470,7 @@ public class Graph{
      * @param s The location of node
      * @return The node object
      */
-    private Node getNode(String s){
+    public Node getNode(String s){
         Node node = null;
 
         // Loop through to find the node
@@ -489,10 +489,10 @@ public class Graph{
      * @param array The target array
      * @return The boolean determining if the edge list contains an array
      */
-    private boolean containsEdge(ArrayList<Node[]> edgeList, Node[] array){
+    public boolean containsEdge(ArrayList<Node[]> edgeList, Node[] array){
         // Loop through the edge list
         for (Node[] nodes : edgeList) {
-            if (nodes[0].getValue().equals(array[0].getValue()) && nodes[1].getValue().equals(array[1].getValue())){
+            if (nodes[0].getValue().equals(array[0].getValue()) && nodes[1].getValue().equals(array[1].getValue()) || nodes[0].getValue().equals(array[1].getValue()) && nodes[1].getValue().equals(array[0].getValue())){
                 return true;
             }
         }

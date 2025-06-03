@@ -1,0 +1,136 @@
+From,To,Type
+New Plymouth,Palmerston North,Bus
+Wellington,Christchurch,Plane
+Christchurch,Greymouth,Train
+Nelson,Wellington,Plane
+Greymouth,Christchurch,Train
+Christchurch,Rotorua,Plane
+Wellington,Whanganui,Bus
+Auckland,Dunedin,Plane
+Wellington,Tauranga,Plane
+Hamilton,Tauranga,Bus
+Auckland,Wellington,Bus
+Auckland,Whangarei,Plane
+Hamilton,Wellington,Train
+Wellington,Hamilton,Train
+Gisborne,Napier,Bus
+Auckland,Nelson,Plane
+Wellington,Napier,Bus
+Auckland,New Plymouth,Plane
+Christchurch,Picton,Bus
+Nelson,Greymouth,Bus
+Christchurch,Picton,Train
+Dunedin,Wellington,Plane
+Picton,Nelson,Bus
+Dunedin,Christchurch,Bus
+Christchurch,Nelson,Plane
+Christchurch,Invercargill,Plane
+Wellington,Nelson,Plane
+Dunedin,Queenstown,Bus
+Gisborne,Auckland,Bus
+Auckland,Rotorua,Plane
+Nelson,Picton,Bus
+Napier,Wellington,Bus
+Auckland,Queenstown,Plane
+Wellington,Auckland,Plane
+Tauranga,Auckland,Plane
+Christchurch,Queenstown,Plane
+Palmerston North,Hamilton,Train
+Wellington,Invercargill,Plane
+Christchurch,Palmerston North,Plane
+Christchurch,Wellington,Plane
+Christchurch,Hamilton,Plane
+Christchurch,Dunedin,Plane
+Whanganui,Wellington,Bus
+Hamilton,Auckland,Bus
+Hamilton,Christchurch,Plane
+Hamilton,Wellington,Plane
+Auckland,Tauranga,Bus
+Tauranga,Christchurch,Plane
+Fox Glacier,Greymouth,Bus
+Hamilton,Palmerston North,Train
+New Plymouth,Auckland,Plane
+Dunedin,Christchurch,Plane
+Auckland,New Plymouth,Bus
+Christchurch,Napier,Plane
+Hamilton,New Plymouth,Bus
+Dunedin,Auckland,Plane
+Invercargill,Christchurch,Bus
+Auckland,Tauranga,Plane
+Napier,Gisborne,Bus
+Auckland,Napier,Plane
+Christchurch,Tauranga,Plane
+Rotorua,Hamilton,Bus
+Hastings,Auckland,Bus
+Wellington,Palmerston North,Train
+Wellington,Queenstown,Plane
+Rotorua,Auckland,Plane
+Wellington,Auckland,Bus
+Auckland,Rotorua,Bus
+Tauranga,Wellington,Plane
+Wellington,Tauranga,Bus
+Napier,Christchurch,Plane
+Wellington,New Plymouth,Plane
+Napier,Wellington,Plane
+New Plymouth,Wellington,Plane
+Queenstown,Christchurch,Bus
+Invercargill,Christchurch,Plane
+Picton,Christchurch,Train
+Auckland,Kerikeri,Bus
+New Plymouth,Hamilton,Bus
+Tauranga,Hastings,Bus
+Nelson,Christchurch,Plane
+Queenstown,Wellington,Plane
+Wellington,Rotorua,Plane
+Kaitaia,Kerikeri,Bus
+Christchurch,Invercargill,Bus
+Napier,Auckland,Plane
+Kerikeri,Kaitaia,Bus
+Picton,Christchurch,Bus
+Auckland,Palmerston North,Bus
+Auckland,Wellington,Plane
+Hamilton,Auckland,Train
+Christchurch,Auckland,Plane
+Wellington,Dunedin,Plane
+Queenstown,Franz Josef,Bus
+Auckland,Palmerston North,Train
+Palmerston North,Christchurch,Plane
+Palmerston North,Auckland,Bus
+Christchurch,Queenstown,Bus
+Christchurch,Dunedin,Bus
+Rotorua,Auckland,Bus
+Greymouth,Nelson,Bus
+Auckland,Christchurch,Plane
+Tauranga,Hamilton,Bus
+Auckland,Wellington,Train
+Wellington,Napier,Plane
+Gisborne,Auckland,Plane
+Franz Josef,Queenstown,Bus
+Auckland,Kerikeri,Plane
+Hastings,Tauranga,Bus
+Wellington,Auckland,Train
+Christchurch,Whangarei,Plane
+Queenstown,Dunedin,Bus
+Christchurch,New Plymouth,Plane
+Wellington,Hamilton,Plane
+Auckland,Hamilton,Train
+Gisborne,Wellington,Plane
+Palmerston North,Wellington,Train
+Whangarei,Auckland,Plane
+Greymouth,Fox Glacier,Bus
+Queenstown,Auckland,Plane
+Auckland,Gisborne,Plane
+Hamilton,Rotorua,Bus
+Auckland,Palmerston North,Plane
+Queenstown,Christchurch,Plane
+Palmerston North,Auckland,Train
+Kerikeri,Auckland,Plane
+Palmerston North,New Plymouth,Bus
+Auckland,Hastings,Bus
+Auckland,Invercargill,Plane
+Auckland,Gisborne,Bus
+Tauranga,Wellington,Bus
+Auckland,Hamilton,Bus
+Wellington,Gisborne,Plane
+Palmerston North,Auckland,Plane
+Nelson,Auckland,Plane
