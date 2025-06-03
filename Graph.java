@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -283,6 +285,9 @@ public class Graph{
      * Prints out the entire graph including all nodes and all edges
      */
     public void print(){
+        // Sort the nodes alphabetically
+        Collections.sort(nodes, Comparator.comparing(Node::getValue));
+
         // Loop through the nodes in the graph
         for (Node n : nodes) {
             // Initialise the output line
@@ -413,7 +418,10 @@ public class Graph{
                 }
             }
         }
-        
+
+        // Sort the visited cities
+        Collections.sort(visitedCities);
+
         // Return the strings
         String output = "";
         for (String city : visitedCities) {

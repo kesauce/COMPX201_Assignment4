@@ -69,7 +69,8 @@ public class TravelPlanner{
                 System.out.println("3. Find edge");
                 System.out.println("4. Print edge");
                 System.out.println("5. Print reachable cities");
-                System.out.println("6: Exit");
+                System.out.println("6: Print graph");
+                System.out.println("7: Exit");
     
                 // Loops through user input to ensure they pick the right numbner
                 while(true){
@@ -78,11 +79,11 @@ public class TravelPlanner{
                         userInput = Integer.parseInt(scanner.nextLine());
 
                         // If number if valid then break
-                        if (userInput > 0  && userInput <= 6){
+                        if (userInput > 0  && userInput <= 7){
                             break;
                         }
                         else{
-                            System.err.println("Invalid number. Choose from 1 to 6.");
+                            System.err.println("Invalid number. Choose from 1 to 7.");
                             continue;
                         }
                     }
@@ -258,9 +259,16 @@ public class TravelPlanner{
                     Thread.sleep(2000);
                 }
             
-                // Exits the program
+                // Prints the entire graph
                 else if (userInput == 6){
                     
+                    System.out.println("----------");
+                    System.out.println("Printing graph...");
+                    graph.print();
+                }
+
+                // Exits the program
+                else if (userInput == 7){
                     // Stops the program
                     System.out.println("----------");
                     System.err.println("Program terminated...");
