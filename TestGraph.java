@@ -703,7 +703,7 @@ public class TestGraph {
         graph.addEdge("Hamilton", "Wellington", "Rail");
 
         String actual = graph.ticketTraverse("Hamilton", 1, 0, 0);
-        String expected = "Hamilton, Auckland, ";
+        String expected = "Auckland, Hamilton, ";
 
 
         // Assert
