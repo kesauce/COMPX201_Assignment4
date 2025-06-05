@@ -62,18 +62,14 @@ public class TestGraph {
      * Tests whether add() can add 1 value
      */
     @Test
-    @DisplayName("Test addNode(), dependent on print()")
+    @DisplayName("Test addNode()")
     public void testAddNodeOneValue(){
         // Assign
         Graph graph = new Graph();
 
         // Act
-        graph.addNode("Auckland");
-
-        graph.print();
-
-        String actual = outputStreamCaptor.toString().trim();
-        String expected = "Auckland:";
+        int actual = graph.addNode("Auckland");
+        int expected = 1;
 
         // Assert
         Assertions.assertEquals(expected, actual);
@@ -90,10 +86,9 @@ public class TestGraph {
 
         // Act
         graph.addNode("Auckland");
-        graph.addNode("Auckland");
+        int actual = graph.addNode("Auckland");
 
-        String actual = outputStreamCaptor.toString().trim();
-        String expected = "Add unsuccessful: string already exists";
+        int expected = 0;
 
         // Assert
         Assertions.assertEquals(expected, actual);
@@ -109,10 +104,9 @@ public class TestGraph {
         Graph graph = new Graph();
 
         // Act
-        graph.addNode("");
+        int actual = graph.addNode("");
 
-        String actual = outputStreamCaptor.toString().trim();
-        String expected = "Add unsuccessful: string is null";
+        int expected = 0;
 
         // Assert
         Assertions.assertEquals(expected, actual);
@@ -122,18 +116,15 @@ public class TestGraph {
      * Tests whether delete() can delete a value
      */
     @Test
-    @DisplayName("Test deleteNode(), dependent on addNode() and print()")
+    @DisplayName("Test deleteNode(), dependent on addNode()")
     public void testDeleteNodeOneValue(){
         // Assign
         Graph graph = new Graph();
 
         // Act
         graph.addNode("Auckland");
-        graph.deleteNode("Auckland");
-        graph.print();
-
-        String actual = outputStreamCaptor.toString().trim();
-        String expected = "";
+        int actual = graph.deleteNode("Auckland");
+        int expected = 1;
 
         // Assert
         Assertions.assertEquals(expected, actual);
@@ -143,17 +134,14 @@ public class TestGraph {
      * Tests whether delete() handles non-existent values
      */
     @Test
-    @DisplayName("Test deleteNode(), dependent on addNode() and print()")
+    @DisplayName("Test deleteNode(), dependent on addNode()")
     public void testDeleteNodeNonExistentValues(){
         // Assign
         Graph graph = new Graph();
 
         // Act
-        graph.deleteNode("Auckland");
-        graph.print();
-
-        String actual = outputStreamCaptor.toString().trim();
-        String expected = "Delete unsuccessful: string doesn't exists";
+        int actual = graph.deleteNode("Auckland");
+        int expected = 0;
 
         // Assert
         Assertions.assertEquals(expected, actual);
@@ -163,17 +151,14 @@ public class TestGraph {
      * Tests whether delete() handles null values
      */
     @Test
-    @DisplayName("Test deleteNode(), dependent on addNode() and print()")
+    @DisplayName("Test deleteNode(), dependent on addNode()")
     public void testDeleteNodeNullValues(){
         // Assign
         Graph graph = new Graph();
 
         // Act
-        graph.deleteNode("");
-        graph.print();
-
-        String actual = outputStreamCaptor.toString().trim();
-        String expected = "Delete unsuccessful: string is null";
+        int actual = graph.deleteNode("");
+        int expected = 0;
 
         // Assert
         Assertions.assertEquals(expected, actual);
@@ -183,7 +168,7 @@ public class TestGraph {
      * Tests whether addEdge() can add a rail edge
      */
     @Test
-    @DisplayName("Test addEdge(), dependent on addNode() and print()")
+    @DisplayName("Test addEdge(), dependent on addNode()")
     public void testAddEdgeRail(){
         // Assign
         Graph graph = new Graph();
@@ -191,13 +176,8 @@ public class TestGraph {
         // Act
         graph.addNode("Auckland");
         graph.addNode("Hamilton");
-        graph.addEdge("Auckland", "Hamilton", "Rail");
-
-        graph.print();
-
-        String actual = outputStreamCaptor.toString().trim();
-        String expected = "Auckland: (Hamilton, Rail), \r\n" + 
-                        "Hamilton: (Auckland, Rail),";
+        int actual = graph.addEdge("Auckland", "Hamilton", "Rail");
+        int expected = 1;
 
         // Assert
         Assertions.assertEquals(expected, actual);
@@ -207,7 +187,7 @@ public class TestGraph {
      * Tests whether addEdge() can add a road edge
      */
     @Test
-    @DisplayName("Test addEdge(), dependent on addNode() and print()")
+    @DisplayName("Test addEdge(), dependent on addNode()")
     public void testAddEdgeRoad(){
         // Assign
         Graph graph = new Graph();
@@ -215,13 +195,8 @@ public class TestGraph {
         // Act
         graph.addNode("Auckland");
         graph.addNode("Hamilton");
-        graph.addEdge("Auckland", "Hamilton", "Road");
-
-        graph.print();
-
-        String actual = outputStreamCaptor.toString().trim();
-        String expected = "Auckland: (Hamilton, Road), \r\n" + 
-                        "Hamilton: (Auckland, Road),";
+        int actual = graph.addEdge("Auckland", "Hamilton", "Road");
+        int expected = 1;
 
         // Assert
         Assertions.assertEquals(expected, actual);
@@ -231,7 +206,7 @@ public class TestGraph {
      * Tests whether addEdge() can add a plane edge
      */
     @Test
-    @DisplayName("Test addEdge(), dependent on addNode() and print()")
+    @DisplayName("Test addEdge(), dependent on addNode()")
     public void testAddEdgePlane(){
         // Assign
         Graph graph = new Graph();
@@ -239,13 +214,8 @@ public class TestGraph {
         // Act
         graph.addNode("Auckland");
         graph.addNode("Hamilton");
-        graph.addEdge("Auckland", "Hamilton", "Plane");
-
-        graph.print();
-
-        String actual = outputStreamCaptor.toString().trim();
-        String expected = "Auckland: (Hamilton, Plane), \r\n" + 
-                        "Hamilton: (Auckland, Plane),";
+        int actual = graph.addEdge("Auckland", "Hamilton", "Plane");
+        int expected = 1;
 
         // Assert
         Assertions.assertEquals(expected, actual);
@@ -255,7 +225,7 @@ public class TestGraph {
      * Tests whether addEdge() can add multiple edges from the same two nodes
      */
     @Test
-    @DisplayName("Test addEdge(), dependent on addNode() and print()")
+    @DisplayName("Test addEdge(), dependent on addNode()")
     public void testAddEdgesTwoLocations(){
         // Assign
         Graph graph = new Graph();
@@ -263,15 +233,10 @@ public class TestGraph {
         // Act
         graph.addNode("Auckland");
         graph.addNode("Hamilton");
-        graph.addEdge("Auckland", "Hamilton", "Rail");
-        graph.addEdge("Auckland", "Hamilton", "Road");
-        graph.addEdge("Auckland", "Hamilton", "Plane");
-
-        graph.print();
-
-        String actual = outputStreamCaptor.toString().trim();
-        String expected = "Auckland: (Hamilton, Plane), (Hamilton, Rail), (Hamilton, Road), \r\n" + 
-                        "Hamilton: (Auckland, Plane), (Auckland, Rail), (Auckland, Road),";
+        int actual = graph.addEdge("Auckland", "Hamilton", "Rail");
+        actual += graph.addEdge("Auckland", "Hamilton", "Road");
+        actual += graph.addEdge("Auckland", "Hamilton", "Plane");
+        int expected = 3;
 
         // Assert
         Assertions.assertEquals(expected, actual);
@@ -281,7 +246,7 @@ public class TestGraph {
      * Tests whether addEdge() can add multiple edges from the three nodes
      */
     @Test
-    @DisplayName("Test addEdge(), dependent on addNode() and print()")
+    @DisplayName("Test addEdge(), dependent on addNode()")
     public void testAddEdgesThreeLocations(){
         // Assign
         Graph graph = new Graph();
@@ -290,16 +255,10 @@ public class TestGraph {
         graph.addNode("Auckland");
         graph.addNode("Hamilton");
         graph.addNode("Tauranga");
-        graph.addEdge("Auckland", "Hamilton", "Rail");
-        graph.addEdge("Hamilton", "Tauranga", "Road");
-        graph.addEdge("Auckland", "Tauranga", "Plane");
-
-        graph.print();
-
-        String actual = outputStreamCaptor.toString().trim();
-        String expected = "Auckland: (Hamilton, Rail), (Tauranga, Plane), \r\n" + 
-                        "Hamilton: (Auckland, Rail), (Tauranga, Road), \r\n" +
-                        "Tauranga: (Auckland, Plane), (Hamilton, Road),";
+        int actual = graph.addEdge("Auckland", "Hamilton", "Rail");
+        actual += graph.addEdge("Hamilton", "Tauranga", "Road");
+        actual += graph.addEdge("Auckland", "Tauranga", "Plane");
+        int expected = 3;
 
         // Assert
         Assertions.assertEquals(expected, actual);
@@ -315,10 +274,8 @@ public class TestGraph {
         Graph graph = new Graph();
 
         // Act
-        graph.addEdge("", "", "");
-
-        String actual = outputStreamCaptor.toString().trim();
-        String expected = "Add unsuccessful: string(s) is empty";
+        int actual = graph.addEdge("", "", "");
+        int expected = 0;
 
         // Assert
         Assertions.assertEquals(expected, actual);
@@ -334,10 +291,8 @@ public class TestGraph {
         Graph graph = new Graph();
 
         // Act
-        graph.addEdge("Hamilton", "Auckland", "Road");
-
-        String actual = outputStreamCaptor.toString().trim();
-        String expected = "Add unsuccessful: string(s) doesn't exist";
+        int actual = graph.addEdge("Hamilton", "Auckland", "Road");
+        int expected = 0;
 
         // Assert
         Assertions.assertEquals(expected, actual);
@@ -355,11 +310,8 @@ public class TestGraph {
         // Act
         graph.addNode("Auckland");
         graph.addNode("Hamilton");
-        graph.addEdge("Hamilton", "Auckland", "Boat");
-
-
-        String actual = outputStreamCaptor.toString().trim();
-        String expected = "Add unsuccessful: invalid type";
+        int actual = graph.addEdge("Hamilton", "Auckland", "Boat");
+        int expected = 0;
 
         // Assert
         Assertions.assertEquals(expected, actual);
@@ -378,11 +330,8 @@ public class TestGraph {
         graph.addNode("Auckland");
         graph.addNode("Hamilton");
         graph.addEdge("Auckland", "Hamilton", "Rail");
-        graph.addEdge("Auckland", "Hamilton", "Rail");
-
-
-        String actual = outputStreamCaptor.toString().trim();
-        String expected = "Add unsuccessful: edge already exists";
+        int actual = graph.addEdge("Auckland", "Hamilton", "Rail");
+        int expected = 0;
 
         // Assert
         Assertions.assertEquals(expected, actual);
@@ -392,7 +341,7 @@ public class TestGraph {
      * Tests whether deleteEdge() deletes one edge
      */
     @Test
-    @DisplayName("Test deleteEdge(), dependent on addNode(), addEdge(), print()")
+    @DisplayName("Test deleteEdge(), dependent on addNode(), addEdge()")
     public void testDeleteEdgeOneValue(){
         // Assign
         Graph graph = new Graph();
@@ -401,13 +350,8 @@ public class TestGraph {
         graph.addNode("Auckland");
         graph.addNode("Hamilton");
         graph.addEdge("Auckland", "Hamilton", "Rail");
-        graph.deleteEdge("Auckland", "Hamilton", "Rail");
-
-        graph.print();
-
-        String actual = outputStreamCaptor.toString().trim();
-        String expected = "Auckland: \r\n" + 
-                        "Hamilton:";
+        int actual = graph.deleteEdge("Auckland", "Hamilton", "Rail");
+        int expected = 1;
 
         // Assert
         Assertions.assertEquals(expected, actual);
@@ -425,10 +369,8 @@ public class TestGraph {
         // Act
         graph.addNode("Auckland");
         graph.addNode("Hamilton");
-        graph.deleteEdge("Auckland", "Hamilton", "Rail");
-
-        String actual = outputStreamCaptor.toString().trim();
-        String expected = "Delete unsuccessful: edge doesn't exist";
+        int actual = graph.deleteEdge("Auckland", "Hamilton", "Rail");
+        int expected = 0;
 
         // Assert
         Assertions.assertEquals(expected, actual);
@@ -444,10 +386,8 @@ public class TestGraph {
         Graph graph = new Graph();
 
         // Act
-        graph.deleteEdge("Hamilton", "Auckland", "Road");
-
-        String actual = outputStreamCaptor.toString().trim();
-        String expected = "Delete unsuccessful: string(s) doesn't exist";
+        int actual = graph.deleteEdge("Hamilton", "Auckland", "Road");
+        int expected = 0;
 
         // Assert
         Assertions.assertEquals(expected, actual);
@@ -463,10 +403,8 @@ public class TestGraph {
         Graph graph = new Graph();
 
         // Act
-        graph.deleteEdge("", "", "");
-
-        String actual = outputStreamCaptor.toString().trim();
-        String expected = "Delete unsuccessful: string(s) is empty";
+        int actual = graph.deleteEdge("", "", "");
+        int expected = 0;
 
         // Assert
         Assertions.assertEquals(expected, actual);
@@ -484,11 +422,8 @@ public class TestGraph {
         // Act
         graph.addNode("Auckland");
         graph.addNode("Hamilton");
-        graph.deleteEdge("Hamilton", "Auckland", "Boat");
-
-
-        String actual = outputStreamCaptor.toString().trim();
-        String expected = "Delete unsuccessful: invalid type";
+        int actual = graph.deleteEdge("Hamilton", "Auckland", "Boat");
+        int expected = 0;
 
         // Assert
         Assertions.assertEquals(expected, actual);
@@ -507,8 +442,6 @@ public class TestGraph {
         graph.addNode("Auckland");
         graph.addNode("Hamilton");
         graph.addEdge("Auckland", "Hamilton", "Rail");
-
-        graph.print();
 
         boolean expected = graph.hasEdge("Hamilton", "Auckland", "Rail");
 
@@ -530,8 +463,6 @@ public class TestGraph {
         graph.addNode("Hamilton");
         graph.addEdge("Auckland", "Hamilton", "Plane");
 
-        graph.print();
-
         boolean expected = graph.hasEdge("Hamilton", "Auckland", "Rail");
 
         // Assert
@@ -548,13 +479,10 @@ public class TestGraph {
         Graph graph = new Graph();
 
         // Act
-        graph.hasEdge("", "", "");
-
-        String actual = outputStreamCaptor.toString().trim();
-        String expected = "Check unsuccessful: string(s) is empty";
+        boolean actual = graph.hasEdge("", "", "");
 
         // Assert
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertFalse(actual);
     }
 
     /**
@@ -567,13 +495,10 @@ public class TestGraph {
         Graph graph = new Graph();
 
         // Act
-        graph.hasEdge("Hamilton", "Auckland", "Road");
-
-        String actual = outputStreamCaptor.toString().trim();
-        String expected = "Check unsuccessful: string(s) doesn't exist";
+        boolean actual = graph.hasEdge("Hamilton", "Auckland", "Road");
 
         // Assert
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertFalse(actual);
     }
 
     /**
@@ -588,14 +513,10 @@ public class TestGraph {
         // Act
         graph.addNode("Auckland");
         graph.addNode("Hamilton");
-        graph.hasEdge("Hamilton", "Auckland", "Boat");
-
-
-        String actual = outputStreamCaptor.toString().trim();
-        String expected = "Check unsuccessful: invalid type";
+        boolean actual = graph.hasEdge("Hamilton", "Auckland", "Boat");
 
         // Assert
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertFalse(actual);
     }
 
     /**

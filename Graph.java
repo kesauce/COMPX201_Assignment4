@@ -26,38 +26,41 @@ public class Graph{
     /**
      * Adds a new location to the list of nodes
      * @param s Name of location as a string
+     * @return 0 if unsuccessful, 1 if successful
      */
-    public void addNode(String s){
+    public int addNode(String s){
         // Checks if the string is null
         if (s == null || s == ""){
-            System.out.println("Add unsuccessful: string is null");
-            return;
+            System.err.println("Add unsuccessful: string is null");
+            return 0;
         }
         // Checks if the node already exists
         else if(this.contains(s)){
-            System.out.println("Add unsuccessful: string already exists");
-            return;
+            System.err.println("Add unsuccessful: string already exists");
+            return 0;
         }
 
         // Create a new node and add it to nodes
         Node newNode = new Node(s);
         nodes.add(newNode);
+        return 1;
     }
 
     /**
      * Deletes a location from the list of nodes and any edges
      * @param s Name of location as a string
+     * @return 0 if unsuccessful, 1 if successful
      */
-    public void deleteNode(String s){
+    public int deleteNode(String s){
         // Checks if the string is null
         if (s == null || s == ""){
-            System.out.println("Delete unsuccessful: string is null");
-            return;
+            System.err.println("Delete unsuccessful: string is null");
+            return 0;
         }
         // Checks if the node already exists
         else if(!this.contains(s)){
-            System.out.println("Delete unsuccessful: string doesn't exists");
-            return;
+            System.err.println("Delete unsuccessful: string doesn't exists");
+            return 0;
         }
 
         // Find the node to delete
@@ -74,6 +77,7 @@ public class Graph{
 
         // Delete the node from the node list
         nodes.remove(node);
+        return 1;
 
     }
 
@@ -82,17 +86,18 @@ public class Graph{
      * @param s1 One location
      * @param s2 The other location
      * @param type The type of edge
+     * @return 0 if unsuccessful, 1 if successful
      */
-    public void addEdge(String s1, String s2, String type){
+    public int addEdge(String s1, String s2, String type){
         // Checks if the strings are empty
         if (s1 == null || s1 == "" || s2 == null || s2 == "" || type == null || type == ""){
-            System.out.println("Add unsuccessful: string(s) is empty");
-            return;
+            System.err.println("Add unsuccessful: string(s) is empty");
+            return 0;
         }
         // Checks if both strings doesn't exist
         else if(!this.contains(s1) || !this.contains(s2)){
-            System.out.println("Add unsuccessful: string(s) doesn't exist");
-            return;
+            System.err.println("Add unsuccessful: string(s) doesn't exist");
+            return 0;
         }
 
         // Grab the arraylist needed for the specific edge
@@ -100,8 +105,8 @@ public class Graph{
         
         // Ensure that arraylist is not null
         if (edgeList == null){
-            System.out.println("Add unsuccessful: invalid type");
-            return;
+            System.err.println("Add unsuccessful: invalid type");
+            return 0;
         }
         
         // Initialise edge array
@@ -121,8 +126,8 @@ public class Graph{
         
         // Checks if that edge already exists
         if (this.containsEdge(edgeList, edgeArray)){
-            System.out.println("Add unsuccessful: edge already exists");
-            return;
+            System.err.println("Add unsuccessful: edge already exists");
+            return 0;
         }
 
         // Add the edge array
@@ -131,6 +136,7 @@ public class Graph{
         // Add the neighbours to each node
         getNode(s1).addNeighbour(getNode(s2));
         getNode(s2).addNeighbour(getNode(s1));
+        return 1;
     }
 
     /**
@@ -138,17 +144,18 @@ public class Graph{
      * @param s1 The first location
      * @param s2 The second location
      * @param type The type of edge
+     * @return 0 if unsuccessful, 1 if successful
      */
-    public void deleteEdge(String s1, String s2, String type){
+    public int deleteEdge(String s1, String s2, String type){
         // Checks if the strings are empty
         if (s1 == null || s1 == "" || s2 == null || s2 == "" || type == null || type == ""){
-            System.out.println("Delete unsuccessful: string(s) is empty");
-            return;
+            System.err.println("Delete unsuccessful: string(s) is empty");
+            return 0;
         }
         // Checks if both strings doesn't exist
         else if (!this.contains(s1) || !this.contains(s2)){
-            System.out.println("Delete unsuccessful: string(s) doesn't exist");
-            return;
+            System.err.println("Delete unsuccessful: string(s) doesn't exist");
+            return 0;
         }
 
     	// Grab the arraylist needed for the specific edge
@@ -156,8 +163,8 @@ public class Graph{
         
         // Ensure that arraylist is not null
         if (edgeList == null){
-            System.out.println("Delete unsuccessful: invalid type");
-            return;
+            System.err.println("Delete unsuccessful: invalid type");
+            return 0;
         }
 
         // Grab the nodes and put it in array
@@ -177,8 +184,8 @@ public class Graph{
 
         // Checks if the array list doesn't contains the edge
         if (!this.containsEdge(edgeList, edgeArray)){
-            System.out.println("Delete unsuccessful: edge doesn't exist");
-            return;
+            System.err.println("Delete unsuccessful: edge doesn't exist");
+            return 0;
         }
         
         // Loop through the array list and find the exact edge
@@ -191,9 +198,10 @@ public class Graph{
                 getNode(s1).deleteNeighbour(getNode(s2));
                 getNode(s2).deleteNeighbour(getNode(s1));
 
-                return;
+                return 1;
             }
         }
+        return 0;
     }
 
     /**
@@ -206,12 +214,12 @@ public class Graph{
     public boolean hasEdge(String s1, String s2, String type){
         // Checks if the strings are empty
         if (s1 == null || s1 == "" || s2 == null || s2 == "" || type == null || type == ""){
-            System.out.println("Check unsuccessful: string(s) is empty");
+            System.err.println("Check unsuccessful: string(s) is empty");
             return false;
         }
         // Checks if both strings doesn't exist
         else if(!this.contains(s1) || !this.contains(s2)){
-            System.out.println("Check unsuccessful: string(s) doesn't exist");
+            System.err.println("Check unsuccessful: string(s) doesn't exist");
             return false;
         }
 
@@ -220,7 +228,7 @@ public class Graph{
         
         // Ensure that arraylist is not null
         if (edgeList == null){
-            System.out.println("Check unsuccessful: invalid type");
+            System.err.println("Check unsuccessful: invalid type");
             return false;
         }
 
