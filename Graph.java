@@ -269,7 +269,7 @@ public class Graph{
         
         // Ensure that arraylist is not null
         if (edgeList == null){
-            System.out.println("Check unsuccessful: invalid type");
+            System.err.println("Check unsuccessful: invalid type");
             return "";
         }
 
@@ -381,7 +381,7 @@ public class Graph{
     public String ticketTraverse(String startCity, int busTickets, int planeTickets, int trainTickets){
         // Checks whether the starting city is a real node
         if (!this.contains(startCity)){
-            System.out.println("Check unsuccessful: starting city doesn't exist");
+            System.err.println("Check unsuccessful: starting city doesn't exist");
             return "";
         }
 
@@ -392,16 +392,14 @@ public class Graph{
         // Initalise string of visited cities
         ArrayList<String> visitedCities = new ArrayList<String>();
 
-
-        // Go through the to visit list until it's empty
+        // Go through the to-visit list until it's empty
         while (!toVisitList.isEmpty()){
-            // Pop the front of the queue
+            // Pop the front of the queue (along with the number of tickets remaining since tickets were used to get to that location)
             Object[] current = toVisitList.remove();
             Node currentNode = (Node) current[0];
             int remainingBus = (int) current[1];
             int remainingPlane = (int) current[2];
             int remainingTrain = (int) current[3];
-
 
             // If current node has been visited already then skip
             if (visitedCities.contains(currentNode.getValue())){
@@ -413,29 +411,30 @@ public class Graph{
 
             // Grab the neighbours of the current node
             ArrayList<Node> neighbours = currentNode.getNeighbours();
-            
 
             // Go through each neighbour
             for (Node neighbour : neighbours) {
-                // If a road exists between the current node and its neighbour and the user has sufficient tickets
+                // If a road exists between the current node and its neighbour and the user has sufficient bus tickets
                 if (hasEdge(currentNode.getValue(), neighbour.getValue(), "Road") && busTickets > 0){
                     // Add the neighbour to the to-visit list and only decrement bus ticket
                     toVisitList.add(new Object[] {neighbour, remainingBus - 1, remainingPlane, remainingTrain});
                 }
-                // If a train exists between the current node and its neigbour and the user has sufficient tickets
+
+                // If a train exists between the current node and its neigbour and the user has sufficient train tickets
                 else if (hasEdge(currentNode.getValue(), neighbour.getValue(), "Rail") && trainTickets > 0){
                     // Add the neighbour to the to-visit list and only decrement train ticket
                     toVisitList.add(new Object[] {neighbour, remainingBus, remainingPlane, remainingTrain - 1});
                 }
-                // If a plane exists between the current node and its neigbour and the user has sufficient tickets
+
+                // If a plane exists between the current node and its neigbour and the user has sufficient plane tickets
                 else if (hasEdge(currentNode.getValue(), neighbour.getValue(), "Plane") && planeTickets > 0){
                     // Add the neighbour to the to-visit list and only decrement plane ticket
-                    toVisitList.add(new Object[] {neighbour, remainingBus - 1, remainingPlane - 1, remainingTrain});
+                    toVisitList.add(new Object[] {neighbour, remainingBus, remainingPlane - 1, remainingTrain});
                 }
             }
         }
 
-        // Sort the visited cities
+        // Sort the visited cities alphabetically
         Collections.sort(visitedCities);
 
         // Return the strings
@@ -447,7 +446,7 @@ public class Graph{
         return output;
     }
 
-    // Helper methods also used in the travel planner
+    // Helper methods also used in the travel planner that's why it's public
 
     /**
      * Checks if a certain value is in the nodes list

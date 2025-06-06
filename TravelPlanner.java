@@ -122,7 +122,7 @@ public class TravelPlanner{
                 // Remove an edge
                 else if (userInput == 2){
                     System.out.println("--------------------");
-                    System.out.println("Adding an edge...");
+                    System.out.println("Remove an edge...");
                     
                     // Ask user for locations
                     System.out.println("Enter the first city: ");

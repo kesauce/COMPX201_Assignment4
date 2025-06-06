@@ -598,7 +598,7 @@ public class TestGraph {
         graph.getEdgesOfType("Boat");
 
         String actual = outputStreamCaptor.toString().trim();
-        String expected = "Check unsuccessful: invalid type";
+        String expected = "";
 
 
         // Assert
